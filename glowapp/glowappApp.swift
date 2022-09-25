@@ -11,7 +11,7 @@ import SwiftUI
 struct glowappApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            FavoritesView()
         }
     }
 }

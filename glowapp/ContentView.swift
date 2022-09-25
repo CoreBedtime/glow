@@ -6,20 +6,66 @@
 //
 
 import SwiftUI
+import Foundation
 
-struct ContentView: View
+
+
+final class FavoritesStore: ObservableObject
 {
+    static let standard = FavoritesStore()
+
+    @Published var favorites: [String] = ["Themes", "Install", "Config"]
+
+    func add(_ favorite: String)
+    {
+        favorites.append(favorite)
+    }
+}
+
+struct FavoritesView: View
+{
+    @ObservedObject var favoritesStore: FavoritesStore = .standard
+
     var body: some View
     {
-        Text("Hello, world!")
-            .padding()
+        NavigationView
+        {
+            List(favoritesStore.favorites, id: \.self)
+            { favorite in
+                NavigationLink(favorite)
+                {
+                    FavoriteDetailView(favorite: favorite)
+                }
+            }.navigationTitle("GLOW")
+        }
+        .preferredColorScheme(.dark)
     }
 }
 
-struct ContentView_Previews: PreviewProvider
+
+func getFolderContentsURLs(_ folderPath: String) -> [URL]
 {
-    static var previews: some View
+    guard let contents = try? FileManager().contentsOfDirectory(atPath: folderPath) else { return [] }
+    return contents.compactMap { URL.init(fileURLWithPath: $0) }
+}
+
+struct FavoriteDetailView: View
+{
+    let favorite: String
+
+    var body: some View
     {
-        ContentView()
+        
+        if favorite == "Themes"
+        {
+            List
+            {
+                ForEach(0..<4)
+                {_ in
+                    Text("Theme")
+                }
+            }
+        }
     }
 }
+
