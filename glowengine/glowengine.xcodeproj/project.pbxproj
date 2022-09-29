@@ -8,16 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		9D0DD83D28DFDF1700309611 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9D0DD83C28DFDF1700309611 /* Info.plist */; };
-		9D0DD83F28DFDF1C00309611 /* Tweak.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D0DD83E28DFDF1C00309611 /* Tweak.m */; };
+		9D0DD83F28DFDF1C00309611 /* Window.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D0DD83E28DFDF1C00309611 /* Window.m */; };
 		9D0DD84228DFDF2500309611 /* ZKSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D0DD84128DFDF2400309611 /* ZKSwizzle.m */; };
+		9D57C3E628E1E9CB00A77993 /* Titlebar.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D57C3E528E1E9CB00A77993 /* Titlebar.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		9D0DD83528DFDF0800309611 /* glowengine.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = glowengine.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D0DD83C28DFDF1700309611 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9D0DD83E28DFDF1C00309611 /* Tweak.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tweak.m; sourceTree = "<group>"; };
+		9D0DD83E28DFDF1C00309611 /* Window.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Window.m; sourceTree = "<group>"; };
 		9D0DD84028DFDF2300309611 /* ZKSwizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZKSwizzle.h; sourceTree = "<group>"; };
 		9D0DD84128DFDF2400309611 /* ZKSwizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZKSwizzle.m; sourceTree = "<group>"; };
+		9D57C3E528E1E9CB00A77993 /* Titlebar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Titlebar.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,7 +37,8 @@
 			isa = PBXGroup;
 			children = (
 				9D0DD83C28DFDF1700309611 /* Info.plist */,
-				9D0DD83E28DFDF1C00309611 /* Tweak.m */,
+				9D0DD83E28DFDF1C00309611 /* Window.m */,
+				9D57C3E528E1E9CB00A77993 /* Titlebar.m */,
 				9D0DD84028DFDF2300309611 /* ZKSwizzle.h */,
 				9D0DD84128DFDF2400309611 /* ZKSwizzle.m */,
 				9D0DD83628DFDF0800309611 /* Products */,
@@ -118,7 +121,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9D0DD83F28DFDF1C00309611 /* Tweak.m in Sources */,
+				9D57C3E628E1E9CB00A77993 /* Titlebar.m in Sources */,
+				9D0DD83F28DFDF1C00309611 /* Window.m in Sources */,
 				9D0DD84228DFDF2500309611 /* ZKSwizzle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
