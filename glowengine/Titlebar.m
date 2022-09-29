@@ -9,7 +9,7 @@
 #import "ZKSwizzle.h"
 
 /*
-    This file adds titlebar graphics. 
+    This file adds titlebar graphics.
 */
 
 BOOL drawHovered = NO;
@@ -47,7 +47,3 @@ hook(_NSThemeWidget)
         }
     }
 endhook
-
-/*
-   This here adds titlebar graphics. (Other apps.)
-*/
