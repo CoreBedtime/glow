@@ -11,6 +11,7 @@
 		9D0DD83F28DFDF1C00309611 /* Window.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D0DD83E28DFDF1C00309611 /* Window.m */; };
 		9D0DD84228DFDF2500309611 /* ZKSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D0DD84128DFDF2400309611 /* ZKSwizzle.m */; };
 		9D57C3E628E1E9CB00A77993 /* Titlebar.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D57C3E528E1E9CB00A77993 /* Titlebar.m */; };
+		9DE6085D28FA300000D63609 /* Scrollbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DE6085C28FA300000D63609 /* Scrollbar.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,7 +20,8 @@
 		9D0DD83E28DFDF1C00309611 /* Window.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Window.m; sourceTree = "<group>"; };
 		9D0DD84028DFDF2300309611 /* ZKSwizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZKSwizzle.h; sourceTree = "<group>"; };
 		9D0DD84128DFDF2400309611 /* ZKSwizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZKSwizzle.m; sourceTree = "<group>"; };
-		9D57C3E528E1E9CB00A77993 /* Titlebar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Titlebar.m; sourceTree = "<group>"; };
+		9D57C3E528E1E9CB00A77993 /* Titlebar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Titlebar.m; sourceTree = "<group>"; };
+		9DE6085C28FA300000D63609 /* Scrollbar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Scrollbar.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +41,7 @@
 				9D0DD83C28DFDF1700309611 /* Info.plist */,
 				9D0DD83E28DFDF1C00309611 /* Window.m */,
 				9D57C3E528E1E9CB00A77993 /* Titlebar.m */,
+				9DE6085C28FA300000D63609 /* Scrollbar.m */,
 				9D0DD84028DFDF2300309611 /* ZKSwizzle.h */,
 				9D0DD84128DFDF2400309611 /* ZKSwizzle.m */,
 				9D0DD83628DFDF0800309611 /* Products */,
@@ -123,6 +126,7 @@
 			files = (
 				9D57C3E628E1E9CB00A77993 /* Titlebar.m in Sources */,
 				9D0DD83F28DFDF1C00309611 /* Window.m in Sources */,
+				9DE6085D28FA300000D63609 /* Scrollbar.m in Sources */,
 				9D0DD84228DFDF2500309611 /* ZKSwizzle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
