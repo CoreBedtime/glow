@@ -7,7 +7,7 @@
 //  Very messy. Needs cleanup.
 
 #import <Cocoa/Cocoa.h>
-#import "ZKSwizzle.h"
+#import "Utility/ZKSwizzle.h"
 
 
 BOOL drawHovered = NO;
@@ -77,6 +77,7 @@ hook(NSToolbarItemViewer)
             if (![self isSpace])
             {
                 NSView *selfv = view;
+                [selfv setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameAqua]];
                 NSView *effectView = [NSView new];
                 [selfv addSubview:effectView positioned:NSWindowBelow relativeTo:NULL];
                 effectView.translatesAutoresizingMaskIntoConstraints = NO;

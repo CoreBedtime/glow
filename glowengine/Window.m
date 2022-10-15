@@ -6,7 +6,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "ZKSwizzle.h"
+#import "Utility/ZKSwizzle.h"
 
 #define WindowMask @"WindowFrame_WindowShapeEdges_Regular.psd"
 #define WindowMaskSmall @"WindowFrame_WindowShapeEdges_Small.psd"
