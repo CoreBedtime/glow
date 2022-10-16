@@ -65,7 +65,6 @@ hook(NSTitlebarView)
     }
 endhook
 
-
 hook(NSToolbarItemViewer)
     -(void)updateTrackingAreas
     {
@@ -74,19 +73,22 @@ hook(NSToolbarItemViewer)
         // A bit hacky but good solution
         for (NSView *view in (NSView *)self.subviews)
         {
-            if (![self isSpace])
+            if (!(view.class == objc_getClass("NSToolbarLabelStack")))
             {
-                NSView *selfv = view;
-                [selfv setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameAqua]];
-                NSView *effectView = [NSView new];
-                [selfv addSubview:effectView positioned:NSWindowBelow relativeTo:NULL];
-                effectView.translatesAutoresizingMaskIntoConstraints = NO;
-                effectView.wantsLayer = YES;
-                [effectView.topAnchor constraintEqualToAnchor: selfv.topAnchor].active = YES;
-                [effectView.bottomAnchor constraintEqualToAnchor: selfv.bottomAnchor].active = YES;
-                [effectView.leftAnchor constraintEqualToAnchor: selfv.leftAnchor].active = YES;
-                [effectView.rightAnchor constraintEqualToAnchor: selfv.rightAnchor].active = YES;
-                effectView.layer.contents = [[NSImage alloc] initWithContentsOfFile: [NSString stringWithFormat:@"/Library/Glow/Segment.png"]];
+                if (![self isSpace])
+                {
+                    NSView *selfv = view;
+                    [selfv setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameAqua]];
+                    NSView *effectView = [NSView new];
+                    [selfv addSubview:effectView positioned:NSWindowBelow relativeTo:NULL];
+                    effectView.translatesAutoresizingMaskIntoConstraints = NO;
+                    effectView.wantsLayer = YES;
+                    [effectView.topAnchor constraintEqualToAnchor: selfv.topAnchor].active = YES;
+                    [effectView.bottomAnchor constraintEqualToAnchor: selfv.bottomAnchor].active = YES;
+                    [effectView.leftAnchor constraintEqualToAnchor: selfv.leftAnchor].active = YES;
+                    [effectView.rightAnchor constraintEqualToAnchor: selfv.rightAnchor].active = YES;
+                    effectView.layer.contents = [[NSImage alloc] initWithContentsOfFile: [NSString stringWithFormat:@"/Library/Glow/Segment.png"]];
+                }
             }
         }
     }
@@ -110,28 +112,6 @@ hook(NSClipView)
             [effectView.leftAnchor constraintEqualToAnchor: selfv.leftAnchor].active = YES;
             [effectView.rightAnchor constraintEqualToAnchor: selfv.rightAnchor].active = YES;
             effectView.layer.contents = [[NSImage alloc] initWithContentsOfFile: [NSString stringWithFormat:@"/Library/Glow/Sidebar.png"]];
-        }
-    }
-endhook
-
-hook(NSVisualEffectView)
-    -(void)updateTrackingAreas
-    {
-        ZKOrig(void);
-        
-        NSView *selfv = (NSView *)self;
-        
-        if (selfv.superview.class == objc_getClass("NSTableRowView"))
-        {
-            NSView *effectView = [NSView new];
-            [selfv addSubview:effectView positioned:NSWindowBelow relativeTo:NULL];
-            effectView.translatesAutoresizingMaskIntoConstraints = NO;
-            effectView.wantsLayer = YES;
-            [effectView.topAnchor constraintEqualToAnchor: selfv.topAnchor].active = YES;
-            [effectView.bottomAnchor constraintEqualToAnchor: selfv.bottomAnchor].active = YES;
-            [effectView.leftAnchor constraintEqualToAnchor: selfv.leftAnchor].active = YES;
-            [effectView.rightAnchor constraintEqualToAnchor: selfv.rightAnchor].active = YES;
-            effectView.layer.contents = [[NSImage alloc] initWithContentsOfFile: [NSString stringWithFormat:@"/Library/Glow/SidebarHighlight.png"]];
         }
     }
 endhook
