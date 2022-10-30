@@ -7,4 +7,7 @@
    <FileRef
       location = "group:glowapp/glowapp.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:/Volumes/LINUX/code/glow/glowd/glowd.xcodeproj">
+   </FileRef>
 </Workspace>

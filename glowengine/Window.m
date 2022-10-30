@@ -7,16 +7,17 @@
 
 #import <Cocoa/Cocoa.h>
 #import "Utility/ZKSwizzle.h"
+#import "Utility/Preference.h"
 
 #define WindowMask @"WindowFrame_WindowShapeEdges_Regular.psd"
-#define WindowMaskSmall @"WindowFrame_WindowShapeEdges_Small.psd"
+#define WindowMask2 @"WindowFrame_WindowShapeEdges_Regular@2x.psd"
 
-@interface NSObject (Window)
+@interface CUIThemeFacet : NSObject;
     -(id)displayName;
 @end
 
 @interface NSView (Private)
-    -(void)_lp_setCornerRadius:(double)arg1 continuous:(BOOL)arg2;
+    -(void)setCornerRadius:(double)arg1;
 @end
 
 
@@ -26,7 +27,7 @@
 hook(CUIThemeFacet)
     -(struct CGImage *)copyLayerImageContentsAndCenter:(struct CGRect *)arg1 renditionKey:(id)arg2
     {
-        if ([[self displayName] isEqual: WindowMask] || [[self displayName] isEqual: WindowMaskSmall])
+        if ([[(CUIThemeFacet *)self displayName] isEqual: WindowMask] || [[(CUIThemeFacet *)self displayName] isEqual: WindowMask2])
         {
             NSImage *image = [[NSImage alloc] initWithSize:CGSizeMake(23, 23)];
             [image lockFocus];
@@ -49,5 +50,20 @@ hook(_NSTitlebarDecorationView)
     -(void)updateLayer
     {
         [(NSView *)self removeFromSuperview];
+    }
+endhook
+
+hook(NSWindow)
+    -(BOOL)_cornerMaskShouldDefineShadow
+    {
+        return NO;
+    }
+
+    -(void)update
+    {
+        ZKOrig(void);
+        
+        [(NSView *)((NSWindow *)self).contentView.superview setCornerRadius: [Preference getFloat:"WindowRadius"]];
+        [((NSWindow *)self) invalidateShadow];
     }
 endhook

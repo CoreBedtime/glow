@@ -3,26 +3,35 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9DEEC42B28E070880044146D /* glowappApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DEEC42A28E070880044146D /* glowappApp.swift */; };
-		9DEEC42D28E070910044146D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DEEC42C28E070910044146D /* ContentView.swift */; };
-		9DEEC42F28E0709D0044146D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DEEC42E28E0709D0044146D /* Assets.xcassets */; };
+		9D5955B92909B7F200DEBE20 /* Main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D5955B82909B7F200DEBE20 /* Main.m */; };
+		9D5955C02909B81500DEBE20 /* Inject.c in Sources */ = {isa = PBXBuildFile; fileRef = 9D5955BF2909B81400DEBE20 /* Inject.c */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		9D5955B32909B7F100DEBE20 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		9DEEC40F28E06FD10044146D /* glowapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = glowapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		9DEEC42828E0707D0044146D /* glowapp.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = glowapp.entitlements; sourceTree = "<group>"; };
-		9DEEC42928E070870044146D /* glowapp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "glowapp-Bridging-Header.h"; sourceTree = "<group>"; };
-		9DEEC42A28E070880044146D /* glowappApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = glowappApp.swift; sourceTree = "<group>"; };
-		9DEEC42C28E070910044146D /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		9DEEC42E28E0709D0044146D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9D5955B52909B7F100DEBE20 /* glowd */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = glowd; sourceTree = BUILT_PRODUCTS_DIR; };
+		9D5955B82909B7F200DEBE20 /* Main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Main.m; sourceTree = "<group>"; };
+		9D5955BF2909B81400DEBE20 /* Inject.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Inject.c; sourceTree = "<group>"; };
+		9D5955C12909B88100DEBE20 /* Inject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Inject.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		9DEEC40C28E06FD10044146D /* Frameworks */ = {
+		9D5955B22909B7F100DEBE20 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -32,116 +41,108 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		9DEEC40628E06FD10044146D = {
+		9D5955AC2909B7F100DEBE20 = {
 			isa = PBXGroup;
 			children = (
-				9DEEC42C28E070910044146D /* ContentView.swift */,
-				9DEEC42A28E070880044146D /* glowappApp.swift */,
-				9DEEC42828E0707D0044146D /* glowapp.entitlements */,
-				9DEEC42E28E0709D0044146D /* Assets.xcassets */,
-				9DEEC41028E06FD10044146D /* Products */,
-				9DEEC42928E070870044146D /* glowapp-Bridging-Header.h */,
+				9D5955B72909B7F100DEBE20 /* glowd */,
+				9D5955B62909B7F100DEBE20 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		9DEEC41028E06FD10044146D /* Products */ = {
+		9D5955B62909B7F100DEBE20 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9DEEC40F28E06FD10044146D /* glowapp.app */,
+				9D5955B52909B7F100DEBE20 /* glowd */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		9D5955B72909B7F100DEBE20 /* glowd */ = {
+			isa = PBXGroup;
+			children = (
+				9D5955B82909B7F200DEBE20 /* Main.m */,
+				9D5955BF2909B81400DEBE20 /* Inject.c */,
+				9D5955C12909B88100DEBE20 /* Inject.h */,
+			);
+			path = glowd;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		9DEEC40E28E06FD10044146D /* glowapp */ = {
+		9D5955B42909B7F100DEBE20 /* glowd */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9DEEC41E28E06FDE0044146D /* Build configuration list for PBXNativeTarget "glowapp" */;
+			buildConfigurationList = 9D5955BC2909B7F200DEBE20 /* Build configuration list for PBXNativeTarget "glowd" */;
 			buildPhases = (
-				9DEEC40B28E06FD10044146D /* Sources */,
-				9DEEC40C28E06FD10044146D /* Frameworks */,
-				9DEEC40D28E06FD10044146D /* Resources */,
+				9D5955B12909B7F100DEBE20 /* Sources */,
+				9D5955B22909B7F100DEBE20 /* Frameworks */,
+				9D5955B32909B7F100DEBE20 /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = glowapp;
-			productName = glowapp;
-			productReference = 9DEEC40F28E06FD10044146D /* glowapp.app */;
-			productType = "com.apple.product-type.application";
+			name = glowd;
+			productName = chakrad;
+			productReference = 9D5955B52909B7F100DEBE20 /* glowd */;
+			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		9DEEC40728E06FD10044146D /* Project object */ = {
+		9D5955AD2909B7F100DEBE20 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1320;
-				LastUpgradeCheck = 1320;
+				LastUpgradeCheck = 1400;
 				TargetAttributes = {
-					9DEEC40E28E06FD10044146D = {
-						CreatedOnToolsVersion = 13.2.1;
-						LastSwiftMigration = 1320;
+					9D5955B42909B7F100DEBE20 = {
+						CreatedOnToolsVersion = 14.0.1;
 					};
 				};
 			};
-			buildConfigurationList = 9DEEC40A28E06FD10044146D /* Build configuration list for PBXProject "glowapp" */;
-			compatibilityVersion = "Xcode 13.0";
+			buildConfigurationList = 9D5955B02909B7F100DEBE20 /* Build configuration list for PBXProject "glowd" */;
+			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
 			);
-			mainGroup = 9DEEC40628E06FD10044146D;
-			productRefGroup = 9DEEC41028E06FD10044146D /* Products */;
+			mainGroup = 9D5955AC2909B7F100DEBE20;
+			productRefGroup = 9D5955B62909B7F100DEBE20 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				9DEEC40E28E06FD10044146D /* glowapp */,
+				9D5955B42909B7F100DEBE20 /* glowd */,
 			);
 		};
 /* End PBXProject section */
 
-/* Begin PBXResourcesBuildPhase section */
-		9DEEC40D28E06FD10044146D /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				9DEEC42F28E0709D0044146D /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
-		9DEEC40B28E06FD10044146D /* Sources */ = {
+		9D5955B12909B7F100DEBE20 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9DEEC42D28E070910044146D /* ContentView.swift in Sources */,
-				9DEEC42B28E070880044146D /* glowappApp.swift in Sources */,
+				9D5955B92909B7F200DEBE20 /* Main.m in Sources */,
+				9D5955C02909B81500DEBE20 /* Inject.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		9DEEC41C28E06FDE0044146D /* Debug */ = {
+		9D5955BA2909B7F200DEBE20 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					arm64e,
 					x86_64,
+					arm64e,
 				);
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -185,28 +186,25 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
-		9DEEC41D28E06FDE0044146D /* Release */ = {
+		9D5955BB2909B7F200DEBE20 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					arm64e,
 					x86_64,
+					arm64e,
 				);
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -244,96 +242,55 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
 			name = Release;
 		};
-		9DEEC41F28E06FDE0044146D /* Debug */ = {
+		9D5955BD2909B7F200DEBE20 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = glowapp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 6J68Z7F878;
 				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.bedtime.glowapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "glowapp-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
-		9DEEC42028E06FDE0044146D /* Release */ = {
+		9D5955BE2909B7F200DEBE20 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = glowapp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 6J68Z7F878;
 				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.bedtime.glowapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "glowapp-Bridging-Header.h";
-				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		9DEEC40A28E06FD10044146D /* Build configuration list for PBXProject "glowapp" */ = {
+		9D5955B02909B7F100DEBE20 /* Build configuration list for PBXProject "glowd" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				9DEEC41C28E06FDE0044146D /* Debug */,
-				9DEEC41D28E06FDE0044146D /* Release */,
+				9D5955BA2909B7F200DEBE20 /* Debug */,
+				9D5955BB2909B7F200DEBE20 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9DEEC41E28E06FDE0044146D /* Build configuration list for PBXNativeTarget "glowapp" */ = {
+		9D5955BC2909B7F200DEBE20 /* Build configuration list for PBXNativeTarget "glowd" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				9DEEC41F28E06FDE0044146D /* Debug */,
-				9DEEC42028E06FDE0044146D /* Release */,
+				9D5955BD2909B7F200DEBE20 /* Debug */,
+				9D5955BE2909B7F200DEBE20 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 9DEEC40728E06FD10044146D /* Project object */;
+	rootObject = 9D5955AD2909B7F100DEBE20 /* Project object */;
 }

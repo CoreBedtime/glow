@@ -8,9 +8,15 @@
 
 #import <Cocoa/Cocoa.h>
 #import "Utility/ZKSwizzle.h"
+#import "Utility/Preference.h"
 
+CA_EXTERN NSString * const kCAContentsScalingRepeat;
+@interface CALayer (CALayerAdditions)
+@property(copy) NSString *contentsScaling;
+@end
 
 BOOL drawHovered = NO;
+int i = 1000;
 
 @interface NSObject (Titlebars)
     -(NSArray *)subviews;
@@ -20,10 +26,15 @@ BOOL drawHovered = NO;
     -(CALayer *)layer;
 @end
 
+@interface NSThemeFrame : NSView
+    -(void)setCustomTitlebarHeight:(double)arg1;
+@end
+
 hook(_NSThemeWidget)
     -(void)viewDidMoveToWindow
     {
         ZKOrig(void);
+    
         [(NSView *)self addTrackingRect:[(NSView *)self bounds] owner:(NSView *)self userData:nil assumeInside:NO];
     }
 
@@ -33,6 +44,9 @@ hook(_NSThemeWidget)
 
     -(void)drawRect:(CGRect)arg1
     {
+        ((NSView *)self).translatesAutoresizingMaskIntoConstraints = NO;
+        [((NSView *)self).widthAnchor constraintEqualToConstant:[Preference getFloat:"TrafficLightWidth"]].active = YES;
+        [((NSView *)self).heightAnchor constraintEqualToConstant:[Preference getFloat:"TrafficLightHeight"]].active = YES;
         if (drawHovered)
         {
             [[[NSImage alloc] initWithContentsOfFile: [NSString stringWithFormat:@"/Library/Glow/%@_On.png", self.className]] drawInRect:arg1];
@@ -47,20 +61,66 @@ hook(NSTitlebarView)
     -(void)updateTrackingAreas
     {
         ZKOrig(void);
-        
-        // A bit hacky but good solution
-        if ((NSView *)self.subviews[0])
+        if (!((NSView *) self).window.titlebarAppearsTransparent)
         {
-            NSView *selfv = (NSView *)self.subviews[0];
-            NSView *effectView = [NSView new];
-            [selfv addSubview:effectView];
-            effectView.translatesAutoresizingMaskIntoConstraints = NO;
-            effectView.wantsLayer = YES;
-            [effectView.topAnchor constraintEqualToAnchor: selfv.topAnchor].active = YES;
-            [effectView.bottomAnchor constraintEqualToAnchor: selfv.bottomAnchor].active = YES;
-            [effectView.leftAnchor constraintEqualToAnchor: selfv.leftAnchor].active = YES;
-            [effectView.rightAnchor constraintEqualToAnchor: selfv.rightAnchor].active = YES;
-            effectView.layer.contents = [[NSImage alloc] initWithContentsOfFile: [NSString stringWithFormat:@"/Library/Glow/Titlebar.png"]];
+            
+            if ([Preference getBool:"DarkTitlebar"] == YES)
+            {
+                [((NSView *)self) setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameDarkAqua]];
+            } else
+            {
+                [((NSView *)self) setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameAqua]];
+            }
+            
+            if ([Preference isAppInBlackListName:"UseDeepTitlebarList"])
+            {
+                for (NSView *blur in ((NSView *)self).subviews)
+                {
+                    if (blur.class == objc_getClass("NSVisualEffectView"))
+                    {
+                        if (blur.subviews.count < 1)
+                        {
+                            NSView *effectView = [NSView new];
+                            [blur addSubview:effectView];
+                            effectView.translatesAutoresizingMaskIntoConstraints = NO;
+                            effectView.wantsLayer = YES;
+                            [effectView.topAnchor constraintEqualToAnchor: blur.topAnchor].active = YES;
+                            [effectView.bottomAnchor constraintEqualToAnchor: blur.bottomAnchor].active = YES;
+                            [effectView.leftAnchor constraintEqualToAnchor: blur.leftAnchor].active = YES;
+                            [effectView.rightAnchor constraintEqualToAnchor: blur.rightAnchor].active = YES;
+                            effectView.layer.contents = [[NSImage alloc] initWithContentsOfFile: [NSString stringWithFormat:@"/Library/Glow/Titlebar.png"]];
+                            
+                            if ([Preference getBool:"TileTitlebar"])
+                            {
+                                [effectView.layer setContentsScaling:kCAContentsScalingRepeat];
+                            }
+                        }
+                    }
+                }
+            } else
+            {
+                if ((NSView *)self.subviews[0])
+                {
+                    NSView *selfv = (NSView *)self.subviews[0];
+                    if (selfv.subviews.count < 1)
+                    {
+                        NSView *effectView = [NSView new];
+                        [selfv addSubview:effectView];
+                        effectView.translatesAutoresizingMaskIntoConstraints = NO;
+                        effectView.wantsLayer = YES;
+                        [effectView.topAnchor constraintEqualToAnchor: selfv.topAnchor].active = YES;
+                        [effectView.bottomAnchor constraintEqualToAnchor: selfv.bottomAnchor].active = YES;
+                        [effectView.leftAnchor constraintEqualToAnchor: selfv.leftAnchor].active = YES;
+                        [effectView.rightAnchor constraintEqualToAnchor: selfv.rightAnchor].active = YES;
+                        effectView.layer.contents = [[NSImage alloc] initWithContentsOfFile: [NSString stringWithFormat:@"/Library/Glow/Titlebar.png"]];
+                        
+                        if ([Preference getBool:"TileTitlebar"])
+                        {
+                            [effectView.layer setContentsScaling:kCAContentsScalingRepeat];
+                        }
+                    }
+                }
+            }
         }
     }
 endhook
@@ -69,50 +129,69 @@ hook(NSToolbarItemViewer)
     -(void)updateTrackingAreas
     {
         ZKOrig(void);
-        
-        // A bit hacky but good solution
+
         for (NSView *view in (NSView *)self.subviews)
         {
-            if (!(view.class == objc_getClass("NSToolbarLabelStack")))
+            if (![self isSpace])
             {
-                if (![self isSpace])
+                if (!(view.class == objc_getClass("NSToolbarLabelStack")) && !(view.class == objc_getClass("NSWidgetView")))
                 {
-                    NSView *selfv = view;
-                    [selfv setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameAqua]];
-                    NSView *effectView = [NSView new];
-                    [selfv addSubview:effectView positioned:NSWindowBelow relativeTo:NULL];
-                    effectView.translatesAutoresizingMaskIntoConstraints = NO;
-                    effectView.wantsLayer = YES;
-                    [effectView.topAnchor constraintEqualToAnchor: selfv.topAnchor].active = YES;
-                    [effectView.bottomAnchor constraintEqualToAnchor: selfv.bottomAnchor].active = YES;
-                    [effectView.leftAnchor constraintEqualToAnchor: selfv.leftAnchor].active = YES;
-                    [effectView.rightAnchor constraintEqualToAnchor: selfv.rightAnchor].active = YES;
-                    effectView.layer.contents = [[NSImage alloc] initWithContentsOfFile: [NSString stringWithFormat:@"/Library/Glow/Segment.png"]];
+                    if (view.subviews.count < 3)
+                    {
+                        NSView *selfv = view;
+                        NSView *effectView = [NSView new];
+                        [selfv addSubview:effectView positioned:NSWindowBelow relativeTo:NULL];
+                        effectView.translatesAutoresizingMaskIntoConstraints = NO;
+                        effectView.wantsLayer = YES;
+                        [effectView.topAnchor constraintEqualToAnchor: selfv.topAnchor].active = YES;
+                        [effectView.bottomAnchor constraintEqualToAnchor: selfv.bottomAnchor].active = YES;
+                        [effectView.leftAnchor constraintEqualToAnchor: selfv.leftAnchor constant:[Preference getFloat:"ToolbarCapInset"]].active = YES;
+                        [effectView.rightAnchor constraintEqualToAnchor: selfv.rightAnchor constant:-([Preference getFloat:"ToolbarCapInset"])].active = YES;
+                        effectView.layer.contents = [[NSImage alloc] initWithContentsOfFile: [NSString stringWithFormat:@"/Library/Glow/Segment.png"]];
+                        
+                        effectView = [NSView new];
+                        [selfv addSubview:effectView positioned:NSWindowBelow relativeTo:NULL];
+                        effectView.translatesAutoresizingMaskIntoConstraints = NO;
+                        effectView.wantsLayer = YES;
+                        [effectView.topAnchor constraintEqualToAnchor: selfv.topAnchor].active = YES;
+                        [effectView.bottomAnchor constraintEqualToAnchor: selfv.bottomAnchor].active = YES;
+                        [effectView.leftAnchor constraintEqualToAnchor: selfv.leftAnchor].active = YES;
+                        [effectView.widthAnchor constraintEqualToConstant:[Preference getFloat:"ToolbarCapInset"]].active = YES;
+                        effectView.layer.contents = [[NSImage alloc] initWithContentsOfFile: [NSString stringWithFormat:@"/Library/Glow/LeftSegment.png"]];
+
+                        effectView = [NSView new];
+                        [selfv addSubview:effectView positioned:NSWindowBelow relativeTo:NULL];
+                        effectView.translatesAutoresizingMaskIntoConstraints = NO;
+                        effectView.wantsLayer = YES;
+                        [effectView.topAnchor constraintEqualToAnchor: selfv.topAnchor].active = YES;
+                        [effectView.bottomAnchor constraintEqualToAnchor: selfv.bottomAnchor].active = YES;
+                        [effectView.rightAnchor constraintEqualToAnchor: selfv.rightAnchor].active = YES;
+                        [effectView.widthAnchor constraintEqualToConstant:[Preference getFloat:"ToolbarCapInset"]].active = YES;
+                        effectView.layer.contents = [[NSImage alloc] initWithContentsOfFile: [NSString stringWithFormat:@"/Library/Glow/RightSegment.png"]];
+                    }
                 }
             }
         }
     }
 endhook
 
-hook(NSClipView)
-    -(void)updateTrackingAreas
+hook(NSWindow)
+    -(void)update
     {
         ZKOrig(void);
-        
-        NSView *selfv = (NSView *)self;
-        
-        if (selfv.superview.superview.class == objc_getClass("NSVisualEffectView"))
+        if (![Preference isAppInBlackListName:"StyleMaskOperationsExclude"])
         {
-            NSView *effectView = [NSView new];
-            [selfv addSubview:effectView positioned:NSWindowBelow relativeTo:NULL];
-            effectView.translatesAutoresizingMaskIntoConstraints = NO;
-            effectView.wantsLayer = YES;
-            [effectView.topAnchor constraintEqualToAnchor: selfv.topAnchor].active = YES;
-            [effectView.bottomAnchor constraintEqualToAnchor: selfv.bottomAnchor].active = YES;
-            [effectView.leftAnchor constraintEqualToAnchor: selfv.leftAnchor].active = YES;
-            [effectView.rightAnchor constraintEqualToAnchor: selfv.rightAnchor].active = YES;
-            effectView.layer.contents = [[NSImage alloc] initWithContentsOfFile: [NSString stringWithFormat:@"/Library/Glow/Sidebar.png"]];
+            ((NSWindow *)self).styleMask = ((NSWindow *)self).styleMask & ~NSWindowStyleMaskFullSizeContentView;
+        }
+        if (![Preference isAppInBlackListName:"StandardTitlebarHeightExclude"])
+        {
+            if (!((NSWindow *)self).toolbar)
+            {
+                if ([(((NSWindow *)self).contentView.superview) isMemberOfClass:NSThemeFrame.class])
+                {
+                    [(NSThemeFrame *)(((NSWindow *)self).contentView.superview) setCustomTitlebarHeight: [Preference getFloat:"StandardTitlebarHeight"]];
+                }
+            }
         }
     }
 endhook
-

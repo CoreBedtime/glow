@@ -18,6 +18,8 @@
 		9DDD4C1528FC9CB40038D344 /* Fonts.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DDD4C1428FC9CB40038D344 /* Fonts.m */; };
 		9DE6085D28FA300000D63609 /* Scrollbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DE6085C28FA300000D63609 /* Scrollbar.m */; };
 		9DE6085F28FB029100D63609 /* Sidebar.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DE6085E28FB029100D63609 /* Sidebar.m */; };
+		9DF35572290CB14E001609F4 /* Preference.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DF35571290CB14E001609F4 /* Preference.m */; };
+		9DF35575290CB90F001609F4 /* INI.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DF35574290CB90E001609F4 /* INI.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +37,10 @@
 		9DDD4C1428FC9CB40038D344 /* Fonts.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Fonts.m; sourceTree = "<group>"; };
 		9DE6085C28FA300000D63609 /* Scrollbar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Scrollbar.m; sourceTree = "<group>"; };
 		9DE6085E28FB029100D63609 /* Sidebar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Sidebar.m; sourceTree = "<group>"; };
+		9DF35570290CB14E001609F4 /* Preference.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Preference.h; sourceTree = "<group>"; };
+		9DF35571290CB14E001609F4 /* Preference.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Preference.m; sourceTree = "<group>"; };
+		9DF35573290CB90E001609F4 /* INI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INI.h; sourceTree = "<group>"; };
+		9DF35574290CB90E001609F4 /* INI.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = INI.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,11 +81,15 @@
 		9DE6086028FB040B00D63609 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				9DDD4C0F28FC68AD0038D344 /* Trampoline.s */,
 				9DDD4C1228FC8D860038D344 /* Hooks.m */,
 				9DDD4C1128FC8D810038D344 /* Hooks.h */,
-				9DDD4C0F28FC68AD0038D344 /* Trampoline.s */,
 				9D0DD84128DFDF2400309611 /* ZKSwizzle.m */,
 				9D0DD84028DFDF2300309611 /* ZKSwizzle.h */,
+				9DF35574290CB90E001609F4 /* INI.c */,
+				9DF35573290CB90E001609F4 /* INI.h */,
+				9DF35570290CB14E001609F4 /* Preference.h */,
+				9DF35571290CB14E001609F4 /* Preference.m */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -158,7 +168,9 @@
 				9D0DD83F28DFDF1C00309611 /* Window.m in Sources */,
 				9DDD4C1528FC9CB40038D344 /* Fonts.m in Sources */,
 				9DE6085F28FB029100D63609 /* Sidebar.m in Sources */,
+				9DF35575290CB90F001609F4 /* INI.c in Sources */,
 				9DE6085D28FA300000D63609 /* Scrollbar.m in Sources */,
+				9DF35572290CB14E001609F4 /* Preference.m in Sources */,
 				9DDD4C1328FC8D860038D344 /* Hooks.m in Sources */,
 				9D0DD84228DFDF2500309611 /* ZKSwizzle.m in Sources */,
 				9DDD4C1028FC68AD0038D344 /* Trampoline.s in Sources */,
@@ -172,6 +184,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					x86_64,
+					arm64e,
+				);
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -231,6 +247,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					x86_64,
+					arm64e,
+				);
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";

@@ -6,6 +6,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "Utility/Preference.h"
 #import "Utility/ZKSwizzle.h"
 #import "Utility/Hooks.h"
 
@@ -15,12 +16,15 @@
 typedef CTFontRef (*CTProc)();
 CTProc CTFontCreateWithFontDescriptorOriginal;
 
-
+/*
 @interface Fonts : NSObject; @end
 @implementation Fonts
     +(void)load
     {
-        process_function_hook((void*)&CTFontCreateWithFontDescriptorOverride, (void*)&CTFontCreateWithFontDescriptor);
+        if (![Preference isAppInBlackListName:"FontsExclude"])
+        {
+            process_function_hook((void*)&CTFontCreateWithFontDescriptorOverride, (void*)&CTFontCreateWithFontDescriptor);
+        }
     }
 
     CTFontRef CTFontCreateWithFontDescriptorOverride(CTFontDescriptorRef  _Nonnull descriptor, CGFloat size, const CGAffineTransform * _Nullable matrix)
@@ -29,7 +33,8 @@ CTProc CTFontCreateWithFontDescriptorOriginal;
         CFDictionaryRef dictionary = CTFontDescriptorCopyAttributes(descriptor);
         
         
-        return CTFontCreateWithNameAndOptions(CFStringCreateWithCString(NULL, "JetBrainsMono-Regular", kCFStringEncodingUTF8), size, matrix, 0);
+        return CTFontCreateWithNameAndOptions(CFStringCreateWithCString(NULL, [[Preference getString:"Font"] cString], kCFStringEncodingUTF8), size, matrix, 0);
     }
 
 @end
+*/
