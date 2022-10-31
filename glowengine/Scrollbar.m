@@ -36,7 +36,9 @@ hook(CUIThemeFacet)
         [image unlockFocus];
         CGImageSourceRef source;
         source = CGImageSourceCreateWithData((CFDataRef)[image TIFFRepresentation], NULL);
-        return CGImageSourceCreateImageAtIndex(source, 0, NULL);
+        CGImageRef img = CGImageSourceCreateImageAtIndex(source, 0, NULL);
+        CFRelease(source);
+        return img;
     } else if ([[self displayName] isEqual: HorizontalNormalResThumb])
     {
         NSImage *image = [[NSImage alloc] initWithSize:CGSizeMake(23, 23)];
@@ -45,10 +47,11 @@ hook(CUIThemeFacet)
         [image unlockFocus];
         CGImageSourceRef source;
         source = CGImageSourceCreateWithData((CFDataRef)[image TIFFRepresentation], NULL);
-        return CGImageSourceCreateImageAtIndex(source, 0, NULL);
+        CGImageRef img = CGImageSourceCreateImageAtIndex(source, 0, NULL);
+        CFRelease(source);
+        return img;
     }
-    {}
-    {}
+    
     if ([[self displayName] isEqual: VerticalNormalResExpandedThumb])
     {
         NSImage *image = [[NSImage alloc] initWithSize:CGSizeMake(23, 23)];
@@ -57,7 +60,9 @@ hook(CUIThemeFacet)
         [image unlockFocus];
         CGImageSourceRef source;
         source = CGImageSourceCreateWithData((CFDataRef)[image TIFFRepresentation], NULL);
-        return CGImageSourceCreateImageAtIndex(source, 0, NULL);
+        CGImageRef img = CGImageSourceCreateImageAtIndex(source, 0, NULL);
+        CFRelease(source);
+        return img;
     } else if ([[self displayName] isEqual: HorizontalNormalResExpandedThumb])
     {
         NSImage *image = [[NSImage alloc] initWithSize:CGSizeMake(23, 23)];
@@ -66,10 +71,11 @@ hook(CUIThemeFacet)
         [image unlockFocus];
         CGImageSourceRef source;
         source = CGImageSourceCreateWithData((CFDataRef)[image TIFFRepresentation], NULL);
-        return CGImageSourceCreateImageAtIndex(source, 0, NULL);
+        CGImageRef img = CGImageSourceCreateImageAtIndex(source, 0, NULL);
+        CFRelease(source);
+        return img;
     }
     {
-        {}
         if ([[self displayName] isEqual: VerticalNormalResOverlayThumb])
         {
             NSImage *image = [[NSImage alloc] initWithSize:CGSizeMake(23, 23)];
@@ -78,7 +84,9 @@ hook(CUIThemeFacet)
             [image unlockFocus];
             CGImageSourceRef source;
             source = CGImageSourceCreateWithData((CFDataRef)[image TIFFRepresentation], NULL);
-            return CGImageSourceCreateImageAtIndex(source, 0, NULL);
+            CGImageRef img = CGImageSourceCreateImageAtIndex(source, 0, NULL);
+            CFRelease(source);
+            return img;
         } else if ([[self displayName] isEqual: HorizontalNormalResOverlayThumb])
         {
             NSImage *image = [[NSImage alloc] initWithSize:CGSizeMake(23, 23)];
@@ -87,84 +95,94 @@ hook(CUIThemeFacet)
             [image unlockFocus];
             CGImageSourceRef source;
             source = CGImageSourceCreateWithData((CFDataRef)[image TIFFRepresentation], NULL);
-            return CGImageSourceCreateImageAtIndex(source, 0, NULL);
-        }
+            CGImageRef img = CGImageSourceCreateImageAtIndex(source, 0, NULL);
+            CFRelease(source);
+            return img;        }
         {
             return ZKOrig(struct CGImage *, arg1, arg2);
         }
     }
-    
 }
 
 @end
 
 hook(CUIThemeFacet)
     -(struct CGImage *)copyLayerImageContentsAndCenter:(struct CGRect *)arg1 renditionKey:(id)arg2
-{
-    if ([[self displayName] isEqual: VerticalHighResThumb])
     {
-        NSImage *image = [[NSImage alloc] initWithSize:CGSizeMake(23, 23)];
-        [image lockFocus];
-        [[[NSImage alloc] initWithContentsOfFile: [NSString stringWithFormat:@"/Library/Glow/VerticalScrollbar2x.png"]] drawInRect:CGRectMake(0, 0, 23, 23)];
-        [image unlockFocus];
-        CGImageSourceRef source;
-        source = CGImageSourceCreateWithData((CFDataRef)[image TIFFRepresentation], NULL);
-        return CGImageSourceCreateImageAtIndex(source, 0, NULL);
-    } else if ([[self displayName] isEqual: HorizontalHighResThumb])
-    {
-        NSImage *image = [[NSImage alloc] initWithSize:CGSizeMake(23, 23)];
-        [image lockFocus];
-        [[[NSImage alloc] initWithContentsOfFile: [NSString stringWithFormat:@"/Library/Glow/HorizontalScrollbar2x.png"]] drawInRect:CGRectMake(0, 0, 23, 23)];
-        [image unlockFocus];
-        CGImageSourceRef source;
-        source = CGImageSourceCreateWithData((CFDataRef)[image TIFFRepresentation], NULL);
-        return CGImageSourceCreateImageAtIndex(source, 0, NULL);
-    }
-    {}
-    {}
-    if ([[self displayName] isEqual: VerticalHighResExpandedThumb])
-    {
-        NSImage *image = [[NSImage alloc] initWithSize:CGSizeMake(23, 23)];
-        [image lockFocus];
-        [[[NSImage alloc] initWithContentsOfFile: [NSString stringWithFormat:@"/Library/Glow/VerticalExpandScrollbar2x.png"]] drawInRect:CGRectMake(0, 0, 23, 23)];
-        [image unlockFocus];
-        CGImageSourceRef source;
-        source = CGImageSourceCreateWithData((CFDataRef)[image TIFFRepresentation], NULL);
-        return CGImageSourceCreateImageAtIndex(source, 0, NULL);
-    } else if ([[self displayName] isEqual: HorizontalHighResExpandedThumb])
-    {
-        NSImage *image = [[NSImage alloc] initWithSize:CGSizeMake(23, 23)];
-        [image lockFocus];
-        [[[NSImage alloc] initWithContentsOfFile: [NSString stringWithFormat:@"/Library/Glow/HorizontalExpandScrollbar2x.png"]] drawInRect:CGRectMake(0, 0, 23, 23)];
-        [image unlockFocus];
-        CGImageSourceRef source;
-        source = CGImageSourceCreateWithData((CFDataRef)[image TIFFRepresentation], NULL);
-        return CGImageSourceCreateImageAtIndex(source, 0, NULL);
-    }
-    {
-        {}
-        if ([[self displayName] isEqual: VerticalHighResOverlayThumb])
+        if ([[self displayName] isEqual: VerticalHighResThumb])
         {
             NSImage *image = [[NSImage alloc] initWithSize:CGSizeMake(23, 23)];
             [image lockFocus];
-            [[[NSImage alloc] initWithContentsOfFile: [NSString stringWithFormat:@"/Library/Glow/VerticalOverlayScrollbar2x.png"]] drawInRect:CGRectMake(0, 0, 23, 23)];
+            [[[NSImage alloc] initWithContentsOfFile: [NSString stringWithFormat:@"/Library/Glow/VerticalScrollbar2x.png"]] drawInRect:CGRectMake(0, 0, 23, 23)];
             [image unlockFocus];
             CGImageSourceRef source;
             source = CGImageSourceCreateWithData((CFDataRef)[image TIFFRepresentation], NULL);
-            return CGImageSourceCreateImageAtIndex(source, 0, NULL);
-        } else if ([[self displayName] isEqual: HorizontalHighResOverlayThumb])
+            CGImageRef img = CGImageSourceCreateImageAtIndex(source, 0, NULL);
+            CFRelease(source);
+            return img;
+        } else if ([[self displayName] isEqual: HorizontalHighResThumb])
         {
             NSImage *image = [[NSImage alloc] initWithSize:CGSizeMake(23, 23)];
             [image lockFocus];
-            [[[NSImage alloc] initWithContentsOfFile: [NSString stringWithFormat:@"/Library/Glow/HorizontalOverlayScrollbar2x.png"]] drawInRect:CGRectMake(0, 0, 23, 23)];
+            [[[NSImage alloc] initWithContentsOfFile: [NSString stringWithFormat:@"/Library/Glow/HorizontalScrollbar2x.png"]] drawInRect:CGRectMake(0, 0, 23, 23)];
             [image unlockFocus];
             CGImageSourceRef source;
             source = CGImageSourceCreateWithData((CFDataRef)[image TIFFRepresentation], NULL);
-            return CGImageSourceCreateImageAtIndex(source, 0, NULL);
+            CGImageRef img = CGImageSourceCreateImageAtIndex(source, 0, NULL);
+            CFRelease(source);
+            return img;
+        }
+        
+        if ([[self displayName] isEqual: VerticalHighResExpandedThumb])
+        {
+            NSImage *image = [[NSImage alloc] initWithSize:CGSizeMake(23, 23)];
+            [image lockFocus];
+            [[[NSImage alloc] initWithContentsOfFile: [NSString stringWithFormat:@"/Library/Glow/VerticalExpandScrollbar2x.png"]] drawInRect:CGRectMake(0, 0, 23, 23)];
+            [image unlockFocus];
+            CGImageSourceRef source;
+            source = CGImageSourceCreateWithData((CFDataRef)[image TIFFRepresentation], NULL);
+            CGImageRef img = CGImageSourceCreateImageAtIndex(source, 0, NULL);
+            CFRelease(source);
+            return img;
+        } else if ([[self displayName] isEqual: HorizontalHighResExpandedThumb])
+        {
+            NSImage *image = [[NSImage alloc] initWithSize:CGSizeMake(23, 23)];
+            [image lockFocus];
+            [[[NSImage alloc] initWithContentsOfFile: [NSString stringWithFormat:@"/Library/Glow/HorizontalExpandScrollbar2x.png"]] drawInRect:CGRectMake(0, 0, 23, 23)];
+            [image unlockFocus];
+            CGImageSourceRef source;
+            source = CGImageSourceCreateWithData((CFDataRef)[image TIFFRepresentation], NULL);
+            CGImageRef img = CGImageSourceCreateImageAtIndex(source, 0, NULL);
+            CFRelease(source);
+            return img;
         }
         {
-            return ZKOrig(struct CGImage *, arg1, arg2);
+            if ([[self displayName] isEqual: VerticalHighResOverlayThumb])
+            {
+                NSImage *image = [[NSImage alloc] initWithSize:CGSizeMake(23, 23)];
+                [image lockFocus];
+                [[[NSImage alloc] initWithContentsOfFile: [NSString stringWithFormat:@"/Library/Glow/VerticalOverlayScrollbar2x.png"]] drawInRect:CGRectMake(0, 0, 23, 23)];
+                [image unlockFocus];
+                CGImageSourceRef source;
+                source = CGImageSourceCreateWithData((CFDataRef)[image TIFFRepresentation], NULL);
+                CGImageRef img = CGImageSourceCreateImageAtIndex(source, 0, NULL);
+                CFRelease(source);
+                return img;
+            } else if ([[self displayName] isEqual: HorizontalHighResOverlayThumb])
+            {
+                NSImage *image = [[NSImage alloc] initWithSize:CGSizeMake(23, 23)];
+                [image lockFocus];
+                [[[NSImage alloc] initWithContentsOfFile: [NSString stringWithFormat:@"/Library/Glow/HorizontalOverlayScrollbar2x.png"]] drawInRect:CGRectMake(0, 0, 23, 23)];
+                [image unlockFocus];
+                CGImageSourceRef source;
+                source = CGImageSourceCreateWithData((CFDataRef)[image TIFFRepresentation], NULL);
+                CGImageRef img = CGImageSourceCreateImageAtIndex(source, 0, NULL);
+                CFRelease(source);
+                return img;
+            }
+            {
+                return ZKOrig(struct CGImage *, arg1, arg2);
+            }
         }
     }
-}
 endhook
