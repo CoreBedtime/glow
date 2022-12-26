@@ -6,9 +6,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "Utility/Preference.h"
-#import "Utility/ZKSwizzle.h"
-#import "Utility/Hooks.h"
+#import "Utility/Intel/Hooks.h"
 
 #define kNSCTFontUIUsageAttribute @"NSCTFontUIUsageAttribute"
 
@@ -21,10 +19,7 @@ CTProc CTFontCreateWithFontDescriptorOriginal;
 @implementation Fonts
     +(void)load
     {
-        if (![Preference isAppInBlackListName:"FontsExclude"])
-        {
-            process_function_hook((void*)&CTFontCreateWithFontDescriptorOverride, (void*)&CTFontCreateWithFontDescriptor);
-        }
+        process_function_hook((void*)&CTFontCreateWithFontDescriptorOverride, (void*)&CTFontCreateWithFontDescriptor);
     }
 
     CTFontRef CTFontCreateWithFontDescriptorOverride(CTFontDescriptorRef  _Nonnull descriptor, CGFloat size, const CGAffineTransform * _Nullable matrix)
@@ -33,8 +28,9 @@ CTProc CTFontCreateWithFontDescriptorOriginal;
         CFDictionaryRef dictionary = CTFontDescriptorCopyAttributes(descriptor);
         
         
-        return CTFontCreateWithNameAndOptions(CFStringCreateWithCString(NULL, [[Preference getString:"Font"] cString], kCFStringEncodingUTF8), size, matrix, 0);
+        return CTFontCreateWithNameAndOptions(CFStringCreateWithCString(NULL, "Arial", kCFStringEncodingUTF8), size, matrix, 0);
     }
 
 @end
+
 */

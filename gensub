@@ -1,0 +1,7 @@
+#!/bin/bash
+
+git clone https://github.com/PoomSmart/substitute.git
+cd substitute
+./configure --xcode-archs=arm64 && make -j8
+cp ./out/libsubstitute.dylib ../substitute.dylib
+cd ..

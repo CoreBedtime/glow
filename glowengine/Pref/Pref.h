@@ -7,10 +7,11 @@
 
 #import <Foundation/Foundation.h>
 
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface Pref : NSObject
-
+    +(NSDictionary *)glowPrefs;
 @end
 
 NS_ASSUME_NONNULL_END

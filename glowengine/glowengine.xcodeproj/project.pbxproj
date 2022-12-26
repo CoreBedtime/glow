@@ -8,29 +8,26 @@
 
 /* Begin PBXBuildFile section */
 		9D0DD83D28DFDF1700309611 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9D0DD83C28DFDF1700309611 /* Info.plist */; };
-		9D0DD83F28DFDF1C00309611 /* Window.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D0DD83E28DFDF1C00309611 /* Window.m */; };
+		9D0DD83F28DFDF1C00309611 /* Tweak.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D0DD83E28DFDF1C00309611 /* Tweak.m */; };
 		9D0DD84228DFDF2500309611 /* ZKSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D0DD84128DFDF2400309611 /* ZKSwizzle.m */; };
+		9D727D9F29459E7B00D5B853 /* Pref.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D727D9E29459E7B00D5B853 /* Pref.m */; };
 		9DDD4C1028FC68AD0038D344 /* Trampoline.s in Sources */ = {isa = PBXBuildFile; fileRef = 9DDD4C0F28FC68AD0038D344 /* Trampoline.s */; };
 		9DDD4C1328FC8D860038D344 /* Hooks.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DDD4C1228FC8D860038D344 /* Hooks.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		9DDD4C1528FC9CB40038D344 /* Fonts.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DDD4C1428FC9CB40038D344 /* Fonts.m */; };
-		9DF35572290CB14E001609F4 /* Preference.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DF35571290CB14E001609F4 /* Preference.m */; };
-		9DF35575290CB90F001609F4 /* INI.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DF35574290CB90E001609F4 /* INI.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		9D0DD83528DFDF0800309611 /* glowengine.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = glowengine.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D0DD83C28DFDF1700309611 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9D0DD83E28DFDF1C00309611 /* Window.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Window.m; sourceTree = "<group>"; };
+		9D0DD83E28DFDF1C00309611 /* Tweak.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tweak.m; sourceTree = "<group>"; };
 		9D0DD84028DFDF2300309611 /* ZKSwizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZKSwizzle.h; sourceTree = "<group>"; };
 		9D0DD84128DFDF2400309611 /* ZKSwizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZKSwizzle.m; sourceTree = "<group>"; };
+		9D727D9D29459E7B00D5B853 /* Pref.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Pref.h; sourceTree = "<group>"; };
+		9D727D9E29459E7B00D5B853 /* Pref.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Pref.m; sourceTree = "<group>"; };
 		9DDD4C0F28FC68AD0038D344 /* Trampoline.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = Trampoline.s; sourceTree = "<group>"; };
 		9DDD4C1128FC8D810038D344 /* Hooks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Hooks.h; sourceTree = "<group>"; };
 		9DDD4C1228FC8D860038D344 /* Hooks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Hooks.m; sourceTree = "<group>"; };
 		9DDD4C1428FC9CB40038D344 /* Fonts.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Fonts.m; sourceTree = "<group>"; };
-		9DF35570290CB14E001609F4 /* Preference.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Preference.h; sourceTree = "<group>"; };
-		9DF35571290CB14E001609F4 /* Preference.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Preference.m; sourceTree = "<group>"; };
-		9DF35573290CB90E001609F4 /* INI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INI.h; sourceTree = "<group>"; };
-		9DF35574290CB90E001609F4 /* INI.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = INI.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,13 +41,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9D0DA4DC295986EE00E26338 /* Intel */ = {
+			isa = PBXGroup;
+			children = (
+				9DDD4C0F28FC68AD0038D344 /* Trampoline.s */,
+				9DDD4C1228FC8D860038D344 /* Hooks.m */,
+				9DDD4C1128FC8D810038D344 /* Hooks.h */,
+			);
+			path = Intel;
+			sourceTree = "<group>";
+		};
 		9D0DD82C28DFDF0800309611 = {
 			isa = PBXGroup;
 			children = (
 				9D0DD83C28DFDF1700309611 /* Info.plist */,
+				9D727D9C29459E1300D5B853 /* Pref */,
 				9DE6086028FB040B00D63609 /* Utility */,
 				9DDD4C1428FC9CB40038D344 /* Fonts.m */,
-				9D0DD83E28DFDF1C00309611 /* Window.m */,
+				9D0DD83E28DFDF1C00309611 /* Tweak.m */,
 				9D0DD83628DFDF0800309611 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -63,18 +71,21 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		9D727D9C29459E1300D5B853 /* Pref */ = {
+			isa = PBXGroup;
+			children = (
+				9D727D9D29459E7B00D5B853 /* Pref.h */,
+				9D727D9E29459E7B00D5B853 /* Pref.m */,
+			);
+			path = Pref;
+			sourceTree = "<group>";
+		};
 		9DE6086028FB040B00D63609 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
-				9DDD4C0F28FC68AD0038D344 /* Trampoline.s */,
-				9DDD4C1228FC8D860038D344 /* Hooks.m */,
-				9DDD4C1128FC8D810038D344 /* Hooks.h */,
+				9D0DA4DC295986EE00E26338 /* Intel */,
 				9D0DD84128DFDF2400309611 /* ZKSwizzle.m */,
 				9D0DD84028DFDF2300309611 /* ZKSwizzle.h */,
-				9DF35574290CB90E001609F4 /* INI.c */,
-				9DF35573290CB90E001609F4 /* INI.h */,
-				9DF35570290CB14E001609F4 /* Preference.h */,
-				9DF35571290CB14E001609F4 /* Preference.m */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -95,6 +106,8 @@
 			dependencies = (
 			);
 			name = glowengine;
+			packageProductDependencies = (
+			);
 			productName = glow;
 			productReference = 9D0DD83528DFDF0800309611 /* glowengine.bundle */;
 			productType = "com.apple.product-type.bundle";
@@ -122,6 +135,8 @@
 				Base,
 			);
 			mainGroup = 9D0DD82C28DFDF0800309611;
+			packageReferences = (
+			);
 			productRefGroup = 9D0DD83628DFDF0800309611 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -147,12 +162,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9D0DD83F28DFDF1C00309611 /* Window.m in Sources */,
+				9D0DD83F28DFDF1C00309611 /* Tweak.m in Sources */,
 				9DDD4C1528FC9CB40038D344 /* Fonts.m in Sources */,
-				9DF35575290CB90F001609F4 /* INI.c in Sources */,
-				9DF35572290CB14E001609F4 /* Preference.m in Sources */,
 				9DDD4C1328FC8D860038D344 /* Hooks.m in Sources */,
 				9D0DD84228DFDF2500309611 /* ZKSwizzle.m in Sources */,
+				9D727D9F29459E7B00D5B853 /* Pref.m in Sources */,
 				9DDD4C1028FC68AD0038D344 /* Trampoline.s in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

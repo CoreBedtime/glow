@@ -25,6 +25,12 @@ int main(int argc, const char * argv[])
             inject_sync(app.processIdentifier, "/Library/GlowSupport/glowengine.bundle/Contents/MacOS/glowengine");
         }];
         
+        [[[NSWorkspace sharedWorkspace] notificationCenter] addObserverForName: @"NSWorkspaceDidLaunchApplicationNotification" object:nil queue:nil usingBlock:^(NSNotification * note)
+        {
+            NSRunningApplication* app = [note userInfo][NSWorkspaceApplicationKey];
+            inject_sync(app.processIdentifier, "/Library/GlowSupport/glowengine.bundle/Contents/MacOS/glowengine");
+        }];
+        
         CFRunLoopRun();
     }
     
