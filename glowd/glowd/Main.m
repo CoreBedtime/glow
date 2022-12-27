@@ -16,19 +16,19 @@ int main(int argc, const char * argv[])
     {
         for (NSRunningApplication *app in [[NSWorkspace sharedWorkspace] runningApplications])
         {
-            inject_sync(app.processIdentifier, "/Library/GlowSupport/glowengine.bundle/Contents/MacOS/glowengine");
+            inject_sync(app.processIdentifier, "/Library/GlowSupport/glow.dylib");
         }
         
         [[[NSWorkspace sharedWorkspace] notificationCenter] addObserverForName: @"NSWorkspaceDidActivateApplicationNotification" object:nil queue:nil usingBlock:^(NSNotification * note)
         {
             NSRunningApplication* app = [note userInfo][NSWorkspaceApplicationKey];
-            inject_sync(app.processIdentifier, "/Library/GlowSupport/glowengine.bundle/Contents/MacOS/glowengine");
+            inject_sync(app.processIdentifier, "/Library/GlowSupport/glow.dylib");
         }];
         
         [[[NSWorkspace sharedWorkspace] notificationCenter] addObserverForName: @"NSWorkspaceDidLaunchApplicationNotification" object:nil queue:nil usingBlock:^(NSNotification * note)
         {
             NSRunningApplication* app = [note userInfo][NSWorkspaceApplicationKey];
-            inject_sync(app.processIdentifier, "/Library/GlowSupport/glowengine.bundle/Contents/MacOS/glowengine");
+            inject_sync(app.processIdentifier, "/Library/GlowSupport/glow.dylib");;
         }];
         
         CFRunLoopRun();

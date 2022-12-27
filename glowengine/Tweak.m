@@ -279,39 +279,33 @@ hook(NSWindow)
     {
         ZKOrig(void);
         
-        
-        if (NSWindowStyleMaskFullSizeContentView & (1<<((NSWindow *)self).styleMask))
+        if (![objc_getAssociatedObject(self, hasGlowGraphic) boolValue])
         {
-            NSLog(@"Doing nothing. page is borderless.");
-        } else
-        {
-            if (![objc_getAssociatedObject(self, hasGlowGraphic) boolValue])
+            NSMutableArray *windowArr = [NSMutableArray new];
+            
+            for (int i = 0; i < 8; i++)
             {
-                NSMutableArray *windowArr = [NSMutableArray new];
                 
-                for (int i = 0; i < 8; i++)
-                {
-                    
-                    NSWindow *graphic = [[NSWindow alloc] init];
-                    objc_setAssociatedObject(graphic, hasGlowGraphic, [NSNumber numberWithBool: YES], OBJC_ASSOCIATION_RETAIN);
-                    [((NSWindow *)self) addChildWindow:graphic ordered:NSWindowAbove];
-                    [graphic setStyleMask: NSWindowStyleMaskBorderless];
-                    [graphic setBackgroundColor: NSColor.clearColor];
-                    [graphic setOpaque:NO];
-                    [graphic setHasShadow:NO];
-                    [graphic setIgnoresMouseEvents:YES];
-                    [graphic setHidesOnDeactivate:NO];
-                    [graphic setReleasedWhenClosed:false];
-                    [graphic setContentView: [NSImageView new]];
-                    ((NSImageView *)(graphic.contentView)).imageScaling = NSImageScaleAxesIndependently;
-                    ((NSImageView *)(graphic.contentView)).image = [[NSImage alloc] initWithContentsOfFile:@"/Library/Glow/Default/tab.png"];
-                    [windowArr addObject:graphic];
-                }
-                objc_setAssociatedObject(self, graphicArr, windowArr, OBJC_ASSOCIATION_RETAIN);
-                objc_setAssociatedObject(self, hasGlowGraphic, [NSNumber numberWithBool: YES], OBJC_ASSOCIATION_RETAIN);
-                [self updateGraphicsImage];
-                [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateGraphics) name:NSWindowDidResizeNotification object:nil];
+                NSWindow *graphic = [[NSWindow alloc] init];
+                objc_setAssociatedObject(graphic, hasGlowGraphic, [NSNumber numberWithBool: YES], OBJC_ASSOCIATION_RETAIN);
+                [((NSWindow *)self) addChildWindow:graphic ordered:NSWindowAbove];
+                [graphic setStyleMask: NSWindowStyleMaskBorderless];
+                [graphic setBackgroundColor: NSColor.clearColor];
+                [graphic setOpaque:NO];
+                [graphic setHasShadow:NO];
+                [graphic setIgnoresMouseEvents:YES];
+                [graphic setHidesOnDeactivate:NO];
+                [graphic setReleasedWhenClosed:false];
+                [graphic setContentView: [NSImageView new]];
+                ((NSImageView *)(graphic.contentView)).imageScaling = NSImageScaleAxesIndependently;
+                ((NSImageView *)(graphic.contentView)).image = [[NSImage alloc] initWithContentsOfFile:@"/Library/Glow/Default/tab.png"];
+                [windowArr addObject:graphic];
             }
+            objc_setAssociatedObject(self, graphicArr, windowArr, OBJC_ASSOCIATION_RETAIN);
+            objc_setAssociatedObject(self, hasGlowGraphic, [NSNumber numberWithBool: YES], OBJC_ASSOCIATION_RETAIN);
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateGraphics) name:NSWindowDidResizeNotification object:nil];
+            
+            [self setGFX];
         }
     }
     
@@ -372,8 +366,8 @@ hook(NSWindow)
                                                                                        wf.size.height - sz)
                                                                                        display:YES];
     }
-    
-    -(void)updateGraphicsImage
+
+    -(void)setGFX
     {
         [(NSImageView *)((NSWindow *)(objc_getAssociatedObject(self, graphicArr)[0])).contentView setImage:[[NSImage alloc] initWithContentsOfFile:@"/Library/Glow/Default/windowgraphic1.png"]];
         [(NSImageView *)((NSWindow *)(objc_getAssociatedObject(self, graphicArr)[1])).contentView setImage:[[NSImage alloc] initWithContentsOfFile:@"/Library/Glow/Default/windowgraphic2.png"]];
@@ -446,7 +440,7 @@ hook(NSWindow)
     {
         return NO;
     }
-@end
+endhook
 
 hook(_NSThemeWidget)
     -(void)viewDidMoveToWindow
