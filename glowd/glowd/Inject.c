@@ -238,6 +238,7 @@ static kern_return_t inject_task(task_t remoteTask, const char *lib) {
 
     kr = thread_create(remoteTask, &remoteThread);
     if(kr != KERN_SUCCESS) {
+        fprintf(stderr, "Could not create thread: error %s\n", mach_error_string(kr));
         return kr;
     }
     
@@ -296,6 +297,10 @@ void inject_sync(pid_t pid, const char *lib) {
         return;
         
     kr = inject_task(task, lib);
+    if(kr != KERN_SUCCESS)
+    {
+        fprintf(stderr, "Could not inject %d\n", pid);
+    }
     mach_port_deallocate(mach_task_self(), task);
 }
     

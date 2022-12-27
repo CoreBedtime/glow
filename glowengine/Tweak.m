@@ -304,6 +304,7 @@ hook(NSWindow)
             objc_setAssociatedObject(self, graphicArr, windowArr, OBJC_ASSOCIATION_RETAIN);
             objc_setAssociatedObject(self, hasGlowGraphic, [NSNumber numberWithBool: YES], OBJC_ASSOCIATION_RETAIN);
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateGraphics) name:NSWindowDidResizeNotification object:nil];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateGraphics) name:NSWindowDidBecomeKeyNotification object:nil];
             
             [self setGFX];
         }
