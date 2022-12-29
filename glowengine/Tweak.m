@@ -298,13 +298,15 @@ hook(NSWindow)
                 [graphic setReleasedWhenClosed:false];
                 [graphic setContentView: [NSImageView new]];
                 ((NSImageView *)(graphic.contentView)).imageScaling = NSImageScaleAxesIndependently;
-                ((NSImageView *)(graphic.contentView)).image = [[NSImage alloc] initWithContentsOfFile:@"/Library/Glow/Default/tab.png"];
                 [windowArr addObject:graphic];
             }
             objc_setAssociatedObject(self, graphicArr, windowArr, OBJC_ASSOCIATION_RETAIN);
             objc_setAssociatedObject(self, hasGlowGraphic, [NSNumber numberWithBool: YES], OBJC_ASSOCIATION_RETAIN);
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateGraphics) name:NSWindowDidResizeNotification object:nil];
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateGraphics) name:NSWindowDidBecomeKeyNotification object:nil];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateGraphics) name:NSWindowDidBecomeMainNotification object:nil];
+            
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(glowClean) name:NSWindowWillCloseNotification object:nil];
             
             [self setGFX];
         }
@@ -317,55 +319,57 @@ hook(NSWindow)
         
         CGRect wf = ((NSWindow *)self).frame;
         
+        NSArray *wArr = objc_getAssociatedObject(self, graphicArr);
+        
         // Corners
-        [(NSWindow *)objc_getAssociatedObject(self, graphicArr)[0] setFrame:CGRectMake(wf.origin.x - hf_sz,
+        [(NSWindow *)wArr[0] setFrame:CGRectMake(wf.origin.x - hf_sz,
                                                                                        wf.origin.y + wf.size.height - hf_sz,
                                                                                        sz,
                                                                                        sz)
-                                                                                       display:YES];
+                                                                                       display:NO];
         
-        [(NSWindow *)objc_getAssociatedObject(self, graphicArr)[1] setFrame:CGRectMake(wf.origin.x + wf.size.width - hf_sz,
+        [(NSWindow *)wArr[1] setFrame:CGRectMake(wf.origin.x + wf.size.width - hf_sz,
                                                                                        wf.origin.y + wf.size.height - hf_sz,
                                                                                        sz,
                                                                                        sz)
-                                                                                       display:YES];
+                                                                                       display:NO];
         
-        [(NSWindow *)objc_getAssociatedObject(self, graphicArr)[2] setFrame:CGRectMake(wf.origin.x - hf_sz,
+        [(NSWindow *)wArr[2] setFrame:CGRectMake(wf.origin.x - hf_sz,
                                                                                        wf.origin.y - hf_sz,
                                                                                        sz,
                                                                                        sz)
-                                                                                       display:YES];
+                                                                                       display:NO];
         
-        [(NSWindow *)objc_getAssociatedObject(self, graphicArr)[3] setFrame:CGRectMake(wf.origin.x + wf.size.width - hf_sz,
+        [(NSWindow *)wArr[3] setFrame:CGRectMake(wf.origin.x + wf.size.width - hf_sz,
                                                                                        wf.origin.y - hf_sz,
                                                                                        sz,
                                                                                        sz)
-                                                                                       display:YES];
+                                                                                       display:NO];
         
         // Stretchys
-        [(NSWindow *)objc_getAssociatedObject(self, graphicArr)[4] setFrame:CGRectMake(wf.origin.x + hf_sz,
+        [(NSWindow *)wArr[4] setFrame:CGRectMake(wf.origin.x + hf_sz,
                                                                                        wf.origin.y + wf.size.height - hf_sz,
                                                                                        wf.size.width - sz,
                                                                                        sz)
-                                                                                       display:YES];
+                                                                                       display:NO];
         
-        [(NSWindow *)objc_getAssociatedObject(self, graphicArr)[5] setFrame:CGRectMake(wf.origin.x + wf.size.width - hf_sz,
+        [(NSWindow *)wArr[5] setFrame:CGRectMake(wf.origin.x + wf.size.width - hf_sz,
                                                                                        wf.origin.y + hf_sz,
                                                                                        sz,
                                                                                        wf.size.height - sz)
-                                                                                       display:YES];
+                                                                                       display:NO];
         
-        [(NSWindow *)objc_getAssociatedObject(self, graphicArr)[6] setFrame:CGRectMake(wf.origin.x + hf_sz,
+        [(NSWindow *)wArr[6] setFrame:CGRectMake(wf.origin.x + hf_sz,
                                                                                        wf.origin.y - hf_sz,
                                                                                        wf.size.width - sz,
                                                                                        sz)
-                                                                                       display:YES];
+                                                                                       display:NO];
         
-        [(NSWindow *)objc_getAssociatedObject(self, graphicArr)[7] setFrame:CGRectMake(wf.origin.x - hf_sz,
+        [(NSWindow *)wArr[7] setFrame:CGRectMake(wf.origin.x - hf_sz,
                                                                                        wf.origin.y + hf_sz,
                                                                                        sz,
                                                                                        wf.size.height - sz)
-                                                                                       display:YES];
+                                                                                       display:NO];
     }
 
     -(void)setGFX
@@ -378,6 +382,14 @@ hook(NSWindow)
         [(NSImageView *)((NSWindow *)(objc_getAssociatedObject(self, graphicArr)[5])).contentView setImage:[[NSImage alloc] initWithContentsOfFile:@"/Library/Glow/Default/windowgraphic6.png"]];
         [(NSImageView *)((NSWindow *)(objc_getAssociatedObject(self, graphicArr)[6])).contentView setImage:[[NSImage alloc] initWithContentsOfFile:@"/Library/Glow/Default/windowgraphic7.png"]];
         [(NSImageView *)((NSWindow *)(objc_getAssociatedObject(self, graphicArr)[7])).contentView setImage:[[NSImage alloc] initWithContentsOfFile:@"/Library/Glow/Default/windowgraphic8.png"]];
+    }
+
+    -(void)glowClean
+    {
+        for (NSWindow *win in objc_getAssociatedObject(self, graphicArr))
+        {
+            [win close];
+        }
     }
 
     -(id)shadowParameters
@@ -496,4 +508,28 @@ endhook
 @end
 
 
+@interface NSWindow (Ext)
+    -(id)shadowParameters;
+@end
 
+@interface GL_GR_WINDOW : NSWindow
+@end
+
+@implementation GL_GR_WINDOW
+    -(id)shadowParameters
+    {
+        NSMutableDictionary *params = [super shadowParameters];
+        
+        [params setObject:[NSNumber numberWithInt:0] forKey:@"com.apple.WindowShadowRimRadiusInactive"];
+        [params setObject:[NSNumber numberWithInt:0] forKey:@"com.apple.WindowShadowRimRadiusActive"];
+        [params setObject:[NSNumber numberWithInt:0] forKey:@"com.apple.WindowShadowInnerRimRadiusInactive"];
+        [params setObject:[NSNumber numberWithInt:0] forKey:@"com.apple.WindowShadowInnerRimRadiusActive"];
+        [params setObject:[NSNumber numberWithFloat: 0] forKey:@"com.apple.WindowShadowRadiusActive"];
+        [params setObject:[NSNumber numberWithFloat: 0] forKey:@"com.apple.WindowShadowRadiusInactive"];
+        [params setObject:[NSNumber numberWithFloat: 0] forKey:@"com.apple.WindowShadowVerticalOffsetInactive"];
+        [params setObject:[NSNumber numberWithFloat: 0] forKey:@"com.apple.WindowShadowVerticalOffsetActive"];
+        
+
+        return params;
+    }
+@end
