@@ -10,143 +10,7 @@
 #import <objc/runtime.h>
 #import <Cocoa/Cocoa.h>
 #import "Pref/Pref.h"
-
-struct _rgbquad
-{
-    char b:8;
-    char g:8;
-    char r:8;
-    char a:8;
-};
-
-struct _colordef
-{
-    unsigned int version; // excluded from filter?
-    unsigned int reserved;
-    struct _rgbquad value;
-};
-
-@interface CUIThemeRendition : NSObject
-{
-@public
-    struct _renditionkeytoken *_key;
-    //struct cuithemerenditionrenditionflags _renditionFlags;
-    NSString *_name;
-    NSData *_srcData;
-    NSDictionary *_properties;
-}
-    -(id)name;
-    -(id)type;
-    -(id)data;
-    -(void)setData:(id)data;
-    @property(readonly, nonatomic) NSData *srcData;
-@end
-
-@interface NSColor (Hex)
-    +(NSColor*)cfx:(NSString*)inColorString;
-@end
-
-
-@interface CUINamedLookup : NSObject
-@end
-
-@interface CUINamedImage : CUINamedLookup
-@end
-
-@interface _CUIRawDataRendition : CUIThemeRendition
-@end
-
-@interface _CUIInternalLinkRendition : CUIThemeRendition
-@end
-
-@interface _CUIThemePixelRendition : CUIThemeRendition
-{
-    unsigned int _nimages;
-    struct CGImage *_image[16];
-    struct CGImage *_unslicedImage;
-}
-
-@end
-
-@interface CUIRenditionKey : NSObject
-    @property(nonatomic) long long themeGlyphWeight;
-    @property(nonatomic) long long themeGlyphSize;
-    @property(nonatomic) long long themeDeploymentTarget;
-    @property(nonatomic) long long themeDisplayGamut;
-    @property(nonatomic) long long themeLocalization;
-    @property(nonatomic) long long themeAppearance;
-    @property(nonatomic) long long themeIdentifier;
-    @property(nonatomic) long long themeGraphicsClass;
-    @property(nonatomic) long long themeMemoryClass;
-    @property(nonatomic) long long themeSizeClassVertical;
-    @property(nonatomic) long long themeSizeClassHorizontal;
-    @property(nonatomic) long long themeSubtype;
-    @property(nonatomic) long long themeIdiom;
-    @property(nonatomic) long long themeScale;
-    @property(nonatomic) long long themeLayer;
-    @property(nonatomic) long long themePresentationState;
-    @property(nonatomic) long long themePreviousState;
-    @property(nonatomic) long long themeState;
-    @property(nonatomic) long long themeDimension2;
-    @property(nonatomic) long long themeDimension1;
-    @property(nonatomic) long long themePreviousValue;
-    @property(nonatomic) long long themeValue;
-    @property(nonatomic) long long themeDirection;
-    @property(nonatomic) long long themeSize;
-    @property(nonatomic) long long themePart;
-    @property(nonatomic) long long themeElement;
-@end
-
-@interface CUIImage : NSObject
-    +(id)imageWithCGImage:(struct CGImage *)arg1;
-    -(id)copyWithZone:(struct _NSZone *)arg1;
-    @property(readonly, nonatomic) struct CGSize size;
-    -(struct CGImage *)cgImage;
-    @property(readwrite, nonatomic) struct CGImage *image;
-    -(void)dealloc;
-    -(id)initWithCGImage:(struct CGImage *)arg1;
-@end
-
-
-@interface CUIThemeFacet : NSObject
-    -(CUIRenditionKey *)renditionKey;
-    -(id)displayName;
-    -(CUIImage *)image;
-    -(id)_rendition;
-@end
-
-@interface CUIShapeEffectPreset : NSObject
-    @property NSString *effectName;
-    -(id)debugDescription;
-    -(void)addColorValueRed:(unsigned int)arg1 green:(unsigned int)arg2 blue:(unsigned int)arg3 forParameter:(unsigned int)arg4 withNewEffectType:(unsigned int)arg5;
-@end
-@interface CUIThemeDataEffectPreset : CUIShapeEffectPreset
-@end
-
-
-typedef union {
-    double floatValue;
-    unsigned long long intValue;
-    struct _rgbcolor {
-        unsigned char r;
-        unsigned char g;
-        unsigned char b;
-    } colorValue;
-    short angleValue;
-    unsigned int enumValue;
-} effectVal;
-
-typedef struct {
-    unsigned int effectType;
-    unsigned int effectParameter;
-    effectVal effectValue;
-} effectData;
-
-
-struct _renditionkeytoken {
-    unsigned short identifier;
-    unsigned short value;
-};
+#import "CoreUI.h"
 
 
 /*
@@ -210,7 +74,7 @@ hook(_CUIRawDataRendition)
                 
                 CALayer *sublayer;
                 
-                layer = [CALayer new];
+                layer = [unarchived objectForKey:@"rootLayer"];
                 sublayer = [CALayer new];
                 sublayer.contents = (__bridge id _Nullable)(maskRef);
                 sublayer.contentsGravity = kCAGravityResize;
@@ -270,128 +134,7 @@ endhook
     Hook Cocoa
 */
 
-static void *graphicArr = &graphicArr;
-static void *hasGlowGraphic = &hasGlowGraphic;
-
 hook(NSWindow)
-
-    -(void)update
-    {
-        ZKOrig(void);
-        
-        if (![objc_getAssociatedObject(self, hasGlowGraphic) boolValue])
-        {
-            NSMutableArray *windowArr = [NSMutableArray new];
-            
-            for (int i = 0; i < 8; i++)
-            {
-                
-                NSWindow *graphic = [[NSWindow alloc] init];
-                objc_setAssociatedObject(graphic, hasGlowGraphic, [NSNumber numberWithBool: YES], OBJC_ASSOCIATION_RETAIN);
-                [((NSWindow *)self) addChildWindow:graphic ordered:NSWindowAbove];
-                [graphic setStyleMask: NSWindowStyleMaskBorderless];
-                [graphic setBackgroundColor: NSColor.clearColor];
-                [graphic setOpaque:NO];
-                [graphic setHasShadow:NO];
-                [graphic setIgnoresMouseEvents:YES];
-                [graphic setHidesOnDeactivate:NO];
-                [graphic setReleasedWhenClosed:false];
-                [graphic setContentView: [NSImageView new]];
-                ((NSImageView *)(graphic.contentView)).imageScaling = NSImageScaleAxesIndependently;
-                [windowArr addObject:graphic];
-            }
-            objc_setAssociatedObject(self, graphicArr, windowArr, OBJC_ASSOCIATION_RETAIN);
-            objc_setAssociatedObject(self, hasGlowGraphic, [NSNumber numberWithBool: YES], OBJC_ASSOCIATION_RETAIN);
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateGraphics) name:NSWindowDidResizeNotification object:nil];
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateGraphics) name:NSWindowDidBecomeKeyNotification object:nil];
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateGraphics) name:NSWindowDidBecomeMainNotification object:nil];
-            
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(glowClean) name:NSWindowWillCloseNotification object:nil];
-            
-            [self setGFX];
-        }
-    }
-    
-    -(void)updateGraphics
-    {
-        int sz = 64;
-        int hf_sz = sz / 2;
-        
-        CGRect wf = ((NSWindow *)self).frame;
-        
-        NSArray *wArr = objc_getAssociatedObject(self, graphicArr);
-        
-        // Corners
-        [(NSWindow *)wArr[0] setFrame:CGRectMake(wf.origin.x - hf_sz,
-                                                                                       wf.origin.y + wf.size.height - hf_sz,
-                                                                                       sz,
-                                                                                       sz)
-                                                                                       display:NO];
-        
-        [(NSWindow *)wArr[1] setFrame:CGRectMake(wf.origin.x + wf.size.width - hf_sz,
-                                                                                       wf.origin.y + wf.size.height - hf_sz,
-                                                                                       sz,
-                                                                                       sz)
-                                                                                       display:NO];
-        
-        [(NSWindow *)wArr[2] setFrame:CGRectMake(wf.origin.x - hf_sz,
-                                                                                       wf.origin.y - hf_sz,
-                                                                                       sz,
-                                                                                       sz)
-                                                                                       display:NO];
-        
-        [(NSWindow *)wArr[3] setFrame:CGRectMake(wf.origin.x + wf.size.width - hf_sz,
-                                                                                       wf.origin.y - hf_sz,
-                                                                                       sz,
-                                                                                       sz)
-                                                                                       display:NO];
-        
-        // Stretchys
-        [(NSWindow *)wArr[4] setFrame:CGRectMake(wf.origin.x + hf_sz,
-                                                                                       wf.origin.y + wf.size.height - hf_sz,
-                                                                                       wf.size.width - sz,
-                                                                                       sz)
-                                                                                       display:NO];
-        
-        [(NSWindow *)wArr[5] setFrame:CGRectMake(wf.origin.x + wf.size.width - hf_sz,
-                                                                                       wf.origin.y + hf_sz,
-                                                                                       sz,
-                                                                                       wf.size.height - sz)
-                                                                                       display:NO];
-        
-        [(NSWindow *)wArr[6] setFrame:CGRectMake(wf.origin.x + hf_sz,
-                                                                                       wf.origin.y - hf_sz,
-                                                                                       wf.size.width - sz,
-                                                                                       sz)
-                                                                                       display:NO];
-        
-        [(NSWindow *)wArr[7] setFrame:CGRectMake(wf.origin.x - hf_sz,
-                                                                                       wf.origin.y + hf_sz,
-                                                                                       sz,
-                                                                                       wf.size.height - sz)
-                                                                                       display:NO];
-    }
-
-    -(void)setGFX
-    {
-        [(NSImageView *)((NSWindow *)(objc_getAssociatedObject(self, graphicArr)[0])).contentView setImage:[[NSImage alloc] initWithContentsOfFile:@"/Library/Glow/Default/windowgraphic1.png"]];
-        [(NSImageView *)((NSWindow *)(objc_getAssociatedObject(self, graphicArr)[1])).contentView setImage:[[NSImage alloc] initWithContentsOfFile:@"/Library/Glow/Default/windowgraphic2.png"]];
-        [(NSImageView *)((NSWindow *)(objc_getAssociatedObject(self, graphicArr)[2])).contentView setImage:[[NSImage alloc] initWithContentsOfFile:@"/Library/Glow/Default/windowgraphic3.png"]];
-        [(NSImageView *)((NSWindow *)(objc_getAssociatedObject(self, graphicArr)[3])).contentView setImage:[[NSImage alloc] initWithContentsOfFile:@"/Library/Glow/Default/windowgraphic4.png"]];
-        [(NSImageView *)((NSWindow *)(objc_getAssociatedObject(self, graphicArr)[4])).contentView setImage:[[NSImage alloc] initWithContentsOfFile:@"/Library/Glow/Default/windowgraphic5.png"]];
-        [(NSImageView *)((NSWindow *)(objc_getAssociatedObject(self, graphicArr)[5])).contentView setImage:[[NSImage alloc] initWithContentsOfFile:@"/Library/Glow/Default/windowgraphic6.png"]];
-        [(NSImageView *)((NSWindow *)(objc_getAssociatedObject(self, graphicArr)[6])).contentView setImage:[[NSImage alloc] initWithContentsOfFile:@"/Library/Glow/Default/windowgraphic7.png"]];
-        [(NSImageView *)((NSWindow *)(objc_getAssociatedObject(self, graphicArr)[7])).contentView setImage:[[NSImage alloc] initWithContentsOfFile:@"/Library/Glow/Default/windowgraphic8.png"]];
-    }
-
-    -(void)glowClean
-    {
-        for (NSWindow *win in objc_getAssociatedObject(self, graphicArr))
-        {
-            [win close];
-        }
-    }
-
     -(id)shadowParameters
     {
         NSMutableDictionary *params = ZKOrig(NSMutableDictionary *);
@@ -429,9 +172,10 @@ hook(NSWindow)
             NSBezierPath *bezierPath = [NSBezierPath bezierPathWithRoundedRect:dstRect xRadius:radius yRadius:radius];
             [[NSColor blackColor] set];
             [bezierPath fill];
+
             return YES;
         }];
-        image.capInsets = NSEdgeInsetsMake(radius, radius, radius, radius);
+        image.capInsets = NSEdgeInsetsMake(0, 0, 0, 0);
         image.resizingMode = NSImageResizingModeStretch;
         return image;
     }
@@ -461,10 +205,6 @@ hook(_NSThemeWidget)
         ((NSView *)self).translatesAutoresizingMaskIntoConstraints = NO;
         [((NSView *)self).widthAnchor constraintEqualToConstant:24].active = YES;
         [((NSView *)self).heightAnchor constraintEqualToConstant:24].active = YES;
-    }
-    -(void)drawRect:(CGRect)dirtyRect
-    {
-        [[[NSImage alloc] initWithContentsOfFile: [NSString stringWithFormat:@"/Library/Glow/Default/%@.png", ((NSButton *)self).className]] drawInRect:dirtyRect];
     }
 endhook
 
@@ -504,32 +244,5 @@ endhook
 
         return [NSColor colorWithRed:r / 255.0f green:g / 255.0f blue:b / 255.0f alpha:1.0f];
 
-    }
-@end
-
-
-@interface NSWindow (Ext)
-    -(id)shadowParameters;
-@end
-
-@interface GL_GR_WINDOW : NSWindow
-@end
-
-@implementation GL_GR_WINDOW
-    -(id)shadowParameters
-    {
-        NSMutableDictionary *params = [super shadowParameters];
-        
-        [params setObject:[NSNumber numberWithInt:0] forKey:@"com.apple.WindowShadowRimRadiusInactive"];
-        [params setObject:[NSNumber numberWithInt:0] forKey:@"com.apple.WindowShadowRimRadiusActive"];
-        [params setObject:[NSNumber numberWithInt:0] forKey:@"com.apple.WindowShadowInnerRimRadiusInactive"];
-        [params setObject:[NSNumber numberWithInt:0] forKey:@"com.apple.WindowShadowInnerRimRadiusActive"];
-        [params setObject:[NSNumber numberWithFloat: 0] forKey:@"com.apple.WindowShadowRadiusActive"];
-        [params setObject:[NSNumber numberWithFloat: 0] forKey:@"com.apple.WindowShadowRadiusInactive"];
-        [params setObject:[NSNumber numberWithFloat: 0] forKey:@"com.apple.WindowShadowVerticalOffsetInactive"];
-        [params setObject:[NSNumber numberWithFloat: 0] forKey:@"com.apple.WindowShadowVerticalOffsetActive"];
-        
-
-        return params;
     }
 @end

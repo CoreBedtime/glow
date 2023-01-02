@@ -28,6 +28,7 @@
 		9DDD4C1128FC8D810038D344 /* Hooks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Hooks.h; sourceTree = "<group>"; };
 		9DDD4C1228FC8D860038D344 /* Hooks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Hooks.m; sourceTree = "<group>"; };
 		9DDD4C1428FC9CB40038D344 /* Fonts.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Fonts.m; sourceTree = "<group>"; };
+		9DED371E29621622001201DE /* CoreUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreUI.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +60,7 @@
 				9DE6086028FB040B00D63609 /* Utility */,
 				9DDD4C1428FC9CB40038D344 /* Fonts.m */,
 				9D0DD83E28DFDF1C00309611 /* Tweak.m */,
+				9DED371E29621622001201DE /* CoreUI.h */,
 				9D0DD83628DFDF0800309611 /* Products */,
 			);
 			sourceTree = "<group>";
