@@ -1,0 +1,399 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9DE7C9A1299DA1B900966022 /* glowcreatorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE7C9A0299DA1B900966022 /* glowcreatorApp.swift */; };
+		9DE7C9A3299DA1B900966022 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE7C9A2299DA1B900966022 /* ContentView.swift */; };
+		9DE7C9A5299DA1BA00966022 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DE7C9A4299DA1BA00966022 /* Assets.xcassets */; };
+		9DE7C9A8299DA1BA00966022 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DE7C9A7299DA1BA00966022 /* Preview Assets.xcassets */; };
+		9DE7C9B0299DA95C00966022 /* TabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE7C9AF299DA95C00966022 /* TabView.swift */; };
+		9DE7C9B2299DAD4300966022 /* ThemePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE7C9B1299DAD4300966022 /* ThemePage.swift */; };
+		9DE7C9B4299EE02C00966022 /* Hooks.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DE7C9B3299EE02C00966022 /* Hooks.m */; };
+		9DE7C9B7299EE0EA00966022 /* Swizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DE7C9B6299EE0EA00966022 /* Swizzle.m */; };
+		9DE7C9BA29A01C0300966022 /* SkyLight.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DE7C9B929A01C0300966022 /* SkyLight.framework */; };
+		9DE7C9BB29A01C0300966022 /* SkyLight.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9DE7C9B929A01C0300966022 /* SkyLight.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		9DE7C9BC29A01C0300966022 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				9DE7C9BB29A01C0300966022 /* SkyLight.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		9DE7C99D299DA1B900966022 /* glowcreator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = glowcreator.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9DE7C9A0299DA1B900966022 /* glowcreatorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = glowcreatorApp.swift; sourceTree = "<group>"; };
+		9DE7C9A2299DA1B900966022 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		9DE7C9A4299DA1BA00966022 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9DE7C9A7299DA1BA00966022 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		9DE7C9A9299DA1BA00966022 /* glowcreator.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = glowcreator.entitlements; sourceTree = "<group>"; };
+		9DE7C9AF299DA95C00966022 /* TabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabView.swift; sourceTree = "<group>"; };
+		9DE7C9B1299DAD4300966022 /* ThemePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemePage.swift; sourceTree = "<group>"; };
+		9DE7C9B3299EE02C00966022 /* Hooks.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Hooks.m; sourceTree = "<group>"; };
+		9DE7C9B5299EE0EA00966022 /* Swizzle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Swizzle.h; sourceTree = "<group>"; };
+		9DE7C9B6299EE0EA00966022 /* Swizzle.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Swizzle.m; sourceTree = "<group>"; };
+		9DE7C9B929A01C0300966022 /* SkyLight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SkyLight.framework; path = ../../../../../System/Library/PrivateFrameworks/SkyLight.framework; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9DE7C99A299DA1B900966022 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9DE7C9BA29A01C0300966022 /* SkyLight.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		9DE7C994299DA1B900966022 = {
+			isa = PBXGroup;
+			children = (
+				9DE7C99F299DA1B900966022 /* glowcreator */,
+				9DE7C99E299DA1B900966022 /* Products */,
+				9DE7C9B829A01C0200966022 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		9DE7C99E299DA1B900966022 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9DE7C99D299DA1B900966022 /* glowcreator.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9DE7C99F299DA1B900966022 /* glowcreator */ = {
+			isa = PBXGroup;
+			children = (
+				9DE7C9A0299DA1B900966022 /* glowcreatorApp.swift */,
+				9DE7C9A2299DA1B900966022 /* ContentView.swift */,
+				9DE7C9B1299DAD4300966022 /* ThemePage.swift */,
+				9DE7C9AF299DA95C00966022 /* TabView.swift */,
+				9DE7C9A4299DA1BA00966022 /* Assets.xcassets */,
+				9DE7C9A9299DA1BA00966022 /* glowcreator.entitlements */,
+				9DE7C9A6299DA1BA00966022 /* Preview Content */,
+				9DE7C9B3299EE02C00966022 /* Hooks.m */,
+				9DE7C9B5299EE0EA00966022 /* Swizzle.h */,
+				9DE7C9B6299EE0EA00966022 /* Swizzle.m */,
+			);
+			path = glowcreator;
+			sourceTree = "<group>";
+		};
+		9DE7C9A6299DA1BA00966022 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				9DE7C9A7299DA1BA00966022 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		9DE7C9B829A01C0200966022 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9DE7C9B929A01C0300966022 /* SkyLight.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9DE7C99C299DA1B900966022 /* glowcreator */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9DE7C9AC299DA1BA00966022 /* Build configuration list for PBXNativeTarget "glowcreator" */;
+			buildPhases = (
+				9DE7C999299DA1B900966022 /* Sources */,
+				9DE7C99A299DA1B900966022 /* Frameworks */,
+				9DE7C99B299DA1B900966022 /* Resources */,
+				9DE7C9BC29A01C0300966022 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = glowcreator;
+			productName = glowcreator;
+			productReference = 9DE7C99D299DA1B900966022 /* glowcreator.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9DE7C995299DA1B900966022 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1420;
+				LastUpgradeCheck = 1420;
+				TargetAttributes = {
+					9DE7C99C299DA1B900966022 = {
+						CreatedOnToolsVersion = 14.2;
+						LastSwiftMigration = 1420;
+					};
+				};
+			};
+			buildConfigurationList = 9DE7C998299DA1B900966022 /* Build configuration list for PBXProject "glowcreator" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 9DE7C994299DA1B900966022;
+			productRefGroup = 9DE7C99E299DA1B900966022 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9DE7C99C299DA1B900966022 /* glowcreator */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		9DE7C99B299DA1B900966022 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9DE7C9A8299DA1BA00966022 /* Preview Assets.xcassets in Resources */,
+				9DE7C9A5299DA1BA00966022 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9DE7C999299DA1B900966022 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9DE7C9A3299DA1B900966022 /* ContentView.swift in Sources */,
+				9DE7C9B0299DA95C00966022 /* TabView.swift in Sources */,
+				9DE7C9B7299EE0EA00966022 /* Swizzle.m in Sources */,
+				9DE7C9B4299EE02C00966022 /* Hooks.m in Sources */,
+				9DE7C9B2299DAD4300966022 /* ThemePage.swift in Sources */,
+				9DE7C9A1299DA1B900966022 /* glowcreatorApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		9DE7C9AA299DA1BA00966022 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		9DE7C9AB299DA1BA00966022 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		9DE7C9AD299DA1BA00966022 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = glowcreator/glowcreator.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"glowcreator/Preview Content\"";
+				DEVELOPMENT_TEAM = 6J68Z7F878;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bedtime.glowcreator;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				SYSTEM_FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
+				);
+			};
+			name = Debug;
+		};
+		9DE7C9AE299DA1BA00966022 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = glowcreator/glowcreator.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"glowcreator/Preview Content\"";
+				DEVELOPMENT_TEAM = 6J68Z7F878;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bedtime.glowcreator;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				SYSTEM_FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
+				);
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9DE7C998299DA1B900966022 /* Build configuration list for PBXProject "glowcreator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9DE7C9AA299DA1BA00966022 /* Debug */,
+				9DE7C9AB299DA1BA00966022 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9DE7C9AC299DA1BA00966022 /* Build configuration list for PBXNativeTarget "glowcreator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9DE7C9AD299DA1BA00966022 /* Debug */,
+				9DE7C9AE299DA1BA00966022 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 9DE7C995299DA1B900966022 /* Project object */;
+}

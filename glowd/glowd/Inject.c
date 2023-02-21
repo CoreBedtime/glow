@@ -268,28 +268,9 @@ static kern_return_t inject_task(task_t remoteTask, const char *lib) {
     return kr;
 }
 
-void inject_sync(pid_t pid, const char *lib) {
-//    int mib[CTL_MAXNAME];
-//    unsigned int mibLen = CTL_MAXNAME;
-//    sysctlnametomib("sysctl.proc_cputype", mib, (size_t *)&mibLen);
-//    mib[mibLen] = pid;
-//    mibLen += 1;
-//
-//    cpu_type_t cpuType;
-//    size_t cpuTypeSize = sizeof(cpuType);
-//    sysctl(mib, mibLen, &cpuType, &cpuTypeSize, 0, 0);
-//
-//#if defined(__arm64__)
-//    if(cpuType != CPU_TYPE_ARM64) {
-//        fprintf(stderr, "Process not arm64(e)\n");
-//        return;
-//    }
-//#elif defined(__x86_64__)
-//    if(cpuType != CPU_TYPE_X86_64) {
-//        fprintf(stderr, "Process not x86_64\n");
-//        return;
-//    }
-//#endif
+void inject(pid_t pid, const char *lib)
+{
+
     
     task_t task;
     kern_return_t kr = task_for_pid(mach_task_self(), pid, &task);
@@ -302,12 +283,6 @@ void inject_sync(pid_t pid, const char *lib) {
         fprintf(stderr, "Could not inject %d\n", pid);
     }
     mach_port_deallocate(mach_task_self(), task);
-}
-    
-void inject(pid_t pid, const char *lib) {
-    dispatch_async(queue, ^{
-        inject_sync(pid, lib);
-    });
 }
 
 static void symbolicate_shellcode() {

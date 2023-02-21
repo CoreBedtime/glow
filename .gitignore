@@ -29,3 +29,7 @@ Temporary Items
 build/
 glowengine/glowengine.xcodeproj/xcuserdata/
 glowapp/glowapp.xcodeproj/xcuserdata/
+inj/
+lib/
+substitute/
+CydiaSubstrate.framework/

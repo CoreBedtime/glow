@@ -9,4 +9,3 @@
 #include <sys/types.h>    //NOTE: Added
 
 void inject(pid_t pid, const char *lib);
-void inject_sync(pid_t pid, const char *lib);

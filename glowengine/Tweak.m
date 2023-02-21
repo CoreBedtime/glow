@@ -12,51 +12,62 @@
 #import "Pref/Pref.h"
 #import "CoreUI.h"
 
+#if !defined(ARRAY_SIZE)
+    #define ARRAY_SIZE(x) (sizeof((x)) / sizeof((x)[0]))
+#endif
+
+typedef int CGSConnectionID;
+CG_EXTERN CGSConnectionID CGSMainConnectionID(void);
+extern CGError SLSSetWindowBackgroundBlurRadius(int cid, uint32_t wid, uint32_t radius);
 
 /*
     Hook coreUI.
 */
 
-/*
 
-hook(CUIShapeEffectPreset)
-    -(void)_insertEffectTuple:(effectData)arg1 atEffectIndex:(unsigned long long)arg2
+NSDictionary *glowPref;
+
+hook(_CUIThemeEffectRendition)
+    -(id)effectPreset
     {
-        //NSLog(class_list)
-        NSDictionary *glowPref = [Pref glowPrefs];
+        CUIShapeEffectPreset *me = ZKOrig(id);
+        CUIShapeEffectPreset *future = [CUIShapeEffectPreset new];
         
-        effectData *effectPtr = &arg1;
-        effectPtr->effectValue.colorValue.r = 255;
-        effectPtr->effectValue.colorValue.g = 255;
-        effectPtr->effectValue.colorValue.b = 255;
+        NSCharacterSet *trim = [NSCharacterSet characterSetWithCharactersInString:@"-: ."];
+        NSString *result = [[[[(_CUIRawDataRendition *)self name] lowercaseString] componentsSeparatedByCharactersInSet:trim] componentsJoinedByString:@""];
+        NSLog(@"GLOW :: EFFECT :: %@", result);
         
-        NSLog(@"FEEV: %@", [(CUIShapeEffectPreset *)self debugDescription]);
-        
-        ZKOrig(void, arg1, arg2);
-    }
-endhook
-
-
-hook(CUIStructuredThemeStore)
-    -(CUIThemeRendition *)renditionWithKey:(const struct _renditionkeytoken *)arg1 usingKeySignature:(id)arg2
-    {
-        CUIThemeRendition *rendition = ZKOrig(CUIThemeRendition *, arg1, arg2);
-        
-        if ([rendition valueForKey:@"_nimages"])
+        if (glowPref[@"ThemeColorOverride"][result])
         {
-            NSLog(@"GLOWB: %@", [rendition valueForKey:@"_nimages"]);
+            int r = (int)([NSColor cfx: glowPref[@"ThemeColorOverride"][result]].redComponent * 255);
+            int g = (int)([NSColor cfx: glowPref[@"ThemeColorOverride"][result]].greenComponent * 255);
+            int b = (int)([NSColor cfx: glowPref[@"ThemeColorOverride"][result]].blueComponent * 255);
+            
+            
+            //for (int i = 0; i < [me _parameterCount]; i++)
+            {
+                [future addColorFillWithRed:r green:g blue:b opacity:255 blendMode:kCGBlendModeNormal tintable:0];
+                [future addShapeOpacityWithOpacity:1];
+                [future addOutputOpacityWithOpacity:1];
+            }
+            
+            return future;
+        } else
+        {
+            return me;
         }
-        return rendition;
     }
 endhook
 
- */
+
+
 
 hook(_CUIRawDataRendition)
     -(id)data
     {
         NSDictionary *unarchived = ((NSMutableDictionary *)[NSKeyedUnarchiver unarchiveObjectWithData: ZKOrig(NSData *)]);
         CALayer *layer;
+        CALayer *sublayer;
         
         
         if ([unarchived isKindOfClass:[NSDictionary class]])
@@ -66,23 +77,27 @@ hook(_CUIRawDataRendition)
                 NSCharacterSet *trim = [NSCharacterSet characterSetWithCharactersInString:@"-: ."];
                 NSString *result = [[[[(_CUIRawDataRendition *)self name] lowercaseString] componentsSeparatedByCharactersInSet:trim] componentsJoinedByString:@""];
                 
+                NSLog(@"GLOW :: MICA :: %@", result);
+                
                 NSImage* someImage = [[NSImage alloc] initWithContentsOfFile:[NSString stringWithFormat:@"/Library/Glow/Default/%@.png", result]];
                 CGImageSourceRef source;
 
                 source = CGImageSourceCreateWithData((CFDataRef)[someImage TIFFRepresentation], NULL);
                 struct CGImage *maskRef =  CGImageSourceCreateImageAtIndex(source, 0, NULL);
                 
-                CALayer *sublayer;
-                
                 layer = [unarchived objectForKey:@"rootLayer"];
                 sublayer = [CALayer new];
                 sublayer.contents = (__bridge id _Nullable)(maskRef);
                 sublayer.contentsGravity = kCAGravityResize;
-                [layer addSublayer: sublayer];
+                
+                if ([glowPref[@"MicaTile"][result] boolValue] == YES)
+                {
+                    [sublayer setContentsScaling:kCAContentsScalingRepeat];
+                }
             }
         }
         
-        return [NSKeyedArchiver archivedDataWithRootObject:@{@"rootLayer" : layer}];
+        return [NSKeyedArchiver archivedDataWithRootObject:@{@"rootLayer" : sublayer}];
     }
 endhook
 
@@ -96,7 +111,7 @@ hook(_CUIInternalLinkRendition)
         CGImageSourceRef source = CGImageSourceCreateWithData((CFDataRef)[someImage TIFFRepresentation], NULL);
         struct CGImage *maskRef =  CGImageSourceCreateImageAtIndex(source, 0, NULL);
         
-        //NSLog(@"GLOW: %@", result);
+        NSLog(@"GLOW :: PNG :: %@", result);
         
         if (maskRef)
             return maskRef;
@@ -109,19 +124,24 @@ hook(CUICommonAssetStorage)
     -(BOOL)getColor:(struct _colordef *)color forName:(const char *)name
     {
         BOOL orig = ZKOrig(BOOL, color, name);
-        NSDictionary *glowPref = [Pref glowPrefs];
         
         if (glowPref[@"ThemeColorOverride"][@(name)])
         {
-            int r = (int)[NSColor cfx: glowPref[@"ThemeColorOverride"][@(name)]].redComponent * 255;
-            int g = (int)[NSColor cfx: glowPref[@"ThemeColorOverride"][@(name)]].greenComponent * 255;
-            int b = (int)[NSColor cfx: glowPref[@"ThemeColorOverride"][@(name)]].blueComponent * 255;
+            int r = (int)([NSColor cfx: glowPref[@"ThemeColorOverride"][@(name)]].redComponent * 255);
+            int g = (int)([NSColor cfx: glowPref[@"ThemeColorOverride"][@(name)]].greenComponent * 255);
+            int b = (int)([NSColor cfx: glowPref[@"ThemeColorOverride"][@(name)]].blueComponent * 255);
             
             color->value.r = (char)r;
             color->value.g = (char)g;
             color->value.b = (char)b;
             color->value.a = (char)255;
+            
+            
         }
+        
+        
+        NSLog(@"GLOW :: COLOR :: %s", name);
+        
         
         return orig;
     }
@@ -135,10 +155,15 @@ endhook
 */
 
 hook(NSWindow)
+
+    -(BOOL)opaque
+    {
+        return NO;
+    }
+
     -(id)shadowParameters
     {
         NSMutableDictionary *params = ZKOrig(NSMutableDictionary *);
-        NSDictionary *glowPref = [Pref glowPrefs];
         
         if ([params respondsToSelector:@selector(setObject:forKey:)]) // We may not have mutable dict, so...
         {
@@ -158,31 +183,52 @@ hook(NSWindow)
             [params setObject:[NSNumber numberWithFloat: [glowPref[@"WindowShadowYOffset"] floatValue] ?: 5] forKey:@"com.apple.WindowShadowVerticalOffsetActive"];
         }
         
+        
+        if ([glowPref[@"DoWindowBlur"] boolValue] ?: NO)
+        {
+            SLSSetWindowBackgroundBlurRadius(CGSMainConnectionID(), [(NSWindow *)self windowNumber], 15);
+        }
+        
         return params;
     }
 
     -(NSImage *)_cornerMask
     {
-        NSDictionary *glowPref = [Pref glowPrefs];
-        
-        CGFloat radius = [glowPref[@"WindowCornerRadius"] floatValue] ?: 0;
-        CGFloat dimension = 2 * radius + 1;
-        NSSize size = NSMakeSize(dimension, dimension);
-        NSImage *image = [NSImage imageWithSize:size flipped:NO drawingHandler:^BOOL(NSRect dstRect) {
-            NSBezierPath *bezierPath = [NSBezierPath bezierPathWithRoundedRect:dstRect xRadius:radius yRadius:radius];
-            [[NSColor blackColor] set];
-            [bezierPath fill];
+        NSImage *img = [[NSImage alloc] initWithContentsOfFile:@"/Library/Glow/Default/systemcornermask.png"];
+        img.resizingMode = NSImageResizingModeStretch;
+        img.capInsets = NSEdgeInsetsMake
+        (
+            [glowPref[@"SystemCornerMaskSliceInset"] intValue] ?: 1,
+            [glowPref[@"SystemCornerMaskSliceInset"] intValue] ?: 1,
+            [glowPref[@"SystemCornerMaskSliceInset"] intValue] ?: 1,
+            [glowPref[@"SystemCornerMaskSliceInset"] intValue] ?: 1
+        );
+        return img;
+    }
 
-            return YES;
-        }];
-        image.capInsets = NSEdgeInsetsMake(0, 0, 0, 0);
-        image.resizingMode = NSImageResizingModeStretch;
-        return image;
+    -(CGSize)minSize
+    {
+        return CGSizeMake(0, 0);
+    }
+
+    -(CGSize)contentMinSize
+    {
+        return CGSizeMake(0, 0);
+    }
+
+    -(CGSize)maxSize
+    {
+        return CGSizeMake(3000, 3000);
+    }
+
+    -(CGSize)contentMaxSize
+    {
+        return CGSizeMake(3000, 3000);
     }
 
     -(NSWindowStyleMask)styleMask
     {
-        BOOL key = [[Pref glowPrefs][@"TitlebarAboveSidebarList"] ?: @[@"Finder", @"Console"] containsObject:[[NSRunningApplication currentApplication] localizedName]];
+        BOOL key = [glowPref[@"TitlebarAboveSidebarList"] ?: @[@"Finder", @"Console"] containsObject:[[NSRunningApplication currentApplication] localizedName]];
         
         if (key)
         {
@@ -192,27 +238,68 @@ hook(NSWindow)
             return ZKOrig(NSWindowStyleMask);
         }
     }
-
-    -(BOOL)opaque
-    {
-        return NO;
-    }
 endhook
 
 hook(_NSThemeWidget)
     -(void)viewDidMoveToWindow
     {
         ((NSView *)self).translatesAutoresizingMaskIntoConstraints = NO;
-        [((NSView *)self).widthAnchor constraintEqualToConstant:24].active = YES;
-        [((NSView *)self).heightAnchor constraintEqualToConstant:24].active = YES;
+        [((NSView *)self).widthAnchor constraintEqualToConstant:[glowPref[@"ButtonSize"] floatValue] ?: 24].active = YES;
+        [((NSView *)self).heightAnchor constraintEqualToConstant:[glowPref[@"ButtonSize"] floatValue] ?: 24].active = YES;
+    }
+
+    -(void)drawRect:(CGRect)dirtyRect
+    {
+        NSCharacterSet *trim = [NSCharacterSet characterSetWithCharactersInString:@"_-: ."];
+        NSString *result = [[[[self className] lowercaseString] componentsSeparatedByCharactersInSet:trim] componentsJoinedByString:@""];
+        
+        dirtyRect.size.width = [glowPref[@"ButtonSize"] floatValue] ?: 24;
+        dirtyRect.size.height = [glowPref[@"ButtonSize"] floatValue] ?: 24;
+        
+        NSImage *img = [[NSImage alloc] initWithContentsOfFile:[NSString stringWithFormat:@"/Library/Glow/Default/%@.png", result]];
+        [img drawInRect:dirtyRect];
+    }
+endhook
+
+hook(NSThemeFrame)
+    -(double)_titlebarHeight
+    {
+        if (((NSView *)self).window.isSheet)
+            return ZKOrig(double);
+        if (((NSView *)self).window.isModalPanel)
+            return ZKOrig(double);
+        if (((NSView *)self).window.isFloatingPanel)
+            return ZKOrig(double);
+        
+        return [glowPref[@"NormalTitlebarHeight"] floatValue] ?: ZKOrig(double);
+    }
+
+    -(double)_titlebarHeight2
+    {
+        if (((NSView *)self).window.isSheet)
+            return ZKOrig(double);
+        if (((NSView *)self).window.isModalPanel)
+            return ZKOrig(double);
+        if (((NSView *)self).window.isFloatingPanel)
+            return ZKOrig(double);
+        
+        return [glowPref[@"NormalTitlebarHeight"] floatValue] ?: ZKOrig(double);
+    }
+
+    -(double)_windowTitlebarButtonSpacingWidth
+    {
+        return [glowPref[@"TrafficLightSpacing"] floatValue] ?: ZKOrig(double);
+    }
+
+    -(BOOL)_shouldCenterTrafficLights
+    {
+        return YES;
     }
 endhook
 
 hook(NSAppearance)
     +(NSAppearance *)appearanceNamed:(NSString *)appearance
     {
-        NSDictionary *glowPref = [Pref glowPrefs];
-        
         if ([glowPref[@"PatchNSAppearance"] boolValue] ?: NO)
         {
             if ([appearance containsString:@"Dark"])
@@ -246,3 +333,16 @@ endhook
 
     }
 @end
+
+@implementation NSView (Ext)
+-(CGPoint)centerPoint
+{
+    return CGPointMake(NSMidX(self.frame), NSMidY(self.frame));
+}
+@end
+
+__attribute__((constructor))
+static void initializer(void)
+{
+    glowPref = [Pref glowPrefs];
+}

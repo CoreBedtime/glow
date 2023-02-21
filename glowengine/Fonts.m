@@ -6,31 +6,41 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "Utility/Intel/Hooks.h"
+#import "Pref/Pref.h"
+#include <dlfcn.h>
 
 #define kNSCTFontUIUsageAttribute @"NSCTFontUIUsageAttribute"
 
-// Essentially a null pointer, useless.
+NSDictionary *fontPref;
+
 typedef CTFontRef (*CTProc)();
 CTProc CTFontCreateWithFontDescriptorOriginal;
 
-/*
-@interface Fonts : NSObject; @end
-@implementation Fonts
-    +(void)load
+CTFontRef CTFontCreateWithFontDescriptorOverride(CTFontDescriptorRef  _Nonnull descriptor, CGFloat size, const CGAffineTransform * _Nullable matrix)
+{
+    CFDictionaryRef dictionary = CTFontDescriptorCopyAttributes(descriptor);
+    
+    NSString *fontName = CFDictionaryGetValue(dictionary, (__bridge CFStringRef)NSFontNameAttribute);
+    
+    BOOL pass = [fontPref[@"FontBlacklist"] ?: @[] containsObject:fontName];
+    if (!pass)
     {
-        process_function_hook((void*)&CTFontCreateWithFontDescriptorOverride, (void*)&CTFontCreateWithFontDescriptor);
-    }
-
-    CTFontRef CTFontCreateWithFontDescriptorOverride(CTFontDescriptorRef  _Nonnull descriptor, CGFloat size, const CGAffineTransform * _Nullable matrix)
-    {
-        // Descriptor is lost due to some misfortune with the way the C hook works.
-        CFDictionaryRef dictionary = CTFontDescriptorCopyAttributes(descriptor);
+        NSMutableDictionary *mutableDictionary = [(__bridge NSDictionary *)dictionary mutableCopy];
+        [mutableDictionary removeObjectForKey:kNSCTFontUIUsageAttribute];
+        [mutableDictionary setValue:fontPref[@"Font"] ?: @"Arial" forKey:NSFontNameAttribute];
         
-        
-        return CTFontCreateWithNameAndOptions(CFStringCreateWithCString(NULL, "Arial", kCFStringEncodingUTF8), size, matrix, 0);
+        descriptor = CTFontDescriptorCreateWithAttributes((__bridge CFDictionaryRef)mutableDictionary);
     }
+    
+    return CTFontCreateWithFontDescriptorOriginal(descriptor, size, matrix);
+}
 
-@end
 
-*/
+__attribute__((constructor))
+static void fontsInitializer(void)
+{
+    fontPref = [Pref glowPrefs];
+    static void (*_MSHookFunction)(void *symbol, void *hook, void **old) = NULL;
+    _MSHookFunction = dlsym(dlopen("/Library/GlowSupport/libellekit.dylib", RTLD_LAZY), "MSHookFunction");
+    _MSHookFunction(&CTFontCreateWithFontDescriptor, &CTFontCreateWithFontDescriptorOverride, (void**)&CTFontCreateWithFontDescriptorOriginal);
+}
